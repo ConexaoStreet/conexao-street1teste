@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "agent/ExecutadorAgent.ps1"
+      - "agent/Parear-Executador.cmd"
+      - "agent/Start-Executador.cmd"
       - ".github/workflows/windows-agent-validate.yml"
   workflow_dispatch:
 
@@ -33,8 +35,20 @@ jobs:
           }
           Write-Host "PARSER_OK"
 
-      - name: Run Windows inventory self-test
+      - name: Run Agent inventory self-test
         shell: powershell
         run: |
           & powershell.exe -NoProfile -ExecutionPolicy Bypass -File "agent/ExecutadorAgent.ps1" -SelfTest
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate self-contained pairing launcher
+        shell: cmd
+        run: |
+          call agent\Parear-Executador.cmd SELFTEST
+          if errorlevel 1 exit /b 1
+
+      - name: Validate self-contained start launcher
+        shell: cmd
+        run: |
+          call agent\Start-Executador.cmd SELFTEST
+          if errorlevel 1 exit /b 1
