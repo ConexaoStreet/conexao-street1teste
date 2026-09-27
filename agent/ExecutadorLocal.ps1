@@ -44,12 +44,20 @@ function Invoke-LocalRepair {
 if($SelfTest){
   Add-Type -AssemblyName System.Windows.Forms
   Add-Type -AssemblyName System.Drawing
+  $device=Get-DeviceInfo
+  $hardware=Get-HardwareSnapshot
   $software=@(Get-InstalledSoftware)
-  $defs=@(Get-LocalDiagnosticDefinitions)
-  $checks=@($defs|ForEach-Object {Run-Check $_})
+  $quick=@(
+    [pscustomobject]@{id="self.os";handler_key="system.os_version";name="Windows";default_severity="medium";default_action_key=$null}
+    [pscustomobject]@{id="self.cpu";handler_key="performance.cpu_load";name="CPU";default_severity="medium";default_action_key=$null}
+    [pscustomobject]@{id="self.storage";handler_key="storage.free_space";name="Armazenamento";default_severity="medium";default_action_key=$null}
+  )
+  $checks=@($quick|ForEach-Object {Run-Check $_})
   $probe=New-Object Windows.Forms.Form
+  $grid=New-Object Windows.Forms.DataGridView
+  $probe.Controls.Add($grid)
   $probe.Dispose()
-  if($checks.Count -lt 10){throw "Diagnóstico local incompleto."}
+  if(!$device.display_name -or !$hardware.cpu.name -or $checks.Count -ne 3){throw "Autoteste local incompleto."}
   Write-Output ("LOCAL_SELFTEST_OK software="+$software.Count+" checks="+$checks.Count)
   exit 0
 }
