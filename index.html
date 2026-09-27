@@ -110,16 +110,16 @@
 
 <dialog id="pair" class="modal glass">
   <div class="head"><h3>Conectar computador</h3><button id="close" class="btn">×</button></div>
-  <p class="muted"><b>1.</b> No PC, execute o pareador. Ele abre como Administrador e mostra um código.</p>
+  <p class="muted"><b>1.</b> No PC, execute o pareador. O Agent 0.3.1 já vem dentro do arquivo, sem baixar nada do GitHub.</p>
   <div class="row" style="margin:12px 0">
-    <a id="downloadPairCmd" class="btn primary" href="./agent/Parear-Executador.cmd?v=0313" download="Parear-Executador.cmd">Baixar botão do PC</a>
-    <a id="downloadStartCmd" class="btn" href="./agent/Start-Executador.cmd?v=0313" download="Start-Executador.cmd">Baixar Iniciar Agent</a>
+    <a id="downloadPairCmd" class="btn primary" href="./agent/Parear-Executador.cmd?v=0321" download="Parear-Executador.cmd">Baixar botão do PC</a>
+    <a id="downloadStartCmd" class="btn" href="./agent/Start-Executador.cmd?v=0321" download="Start-Executador.cmd">Baixar Iniciar Agent</a>
   </div>
   <p class="muted"><b>2.</b> Cole aqui o código que apareceu no PC:</p>
   <input id="pcCode" class="search" inputmode="text" autocomplete="one-time-code" maxlength="12" placeholder="Ex.: AB12CD34" style="width:100%;font:900 24px ui-monospace,monospace;letter-spacing:.15em;text-align:center;text-transform:uppercase;padding:16px">
   <button id="claimPc" class="btn primary" style="width:100%;margin-top:10px">Vincular este PC</button>
   <p id="pairState" class="muted" style="margin-top:12px">O código é gerado no computador e dura 15 minutos.</p>
-  <p class="muted" style="font-size:12px">Depois de vincular uma vez, use <b>Start-Executador.cmd</b>. Os dois arquivos solicitam Administrador automaticamente.</p><p class="ey" style="margin-top:12px">BUILD 2026.09.27-7</p>
+  <p class="muted" style="font-size:12px">Depois de vincular uma vez, use <b>Start-Executador.cmd</b>. Os dois arquivos já incluem o Agent, validam SHA-256 e solicitam Administrador automaticamente.</p><p class="ey" style="margin-top:12px">BUILD 2026.09.27-8</p>
 </dialog>
 <div id="toast" class="toast hide"></div>
 
