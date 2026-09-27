@@ -6,6 +6,8 @@ on:
       - "agent/ExecutadorAgent.ps1"
       - "agent/Parear-Executador.cmd"
       - "agent/Start-Executador.cmd"
+      - "agent/ExecutadorLocal.ps1"
+      - "agent/Executador-PC.cmd"
       - ".github/workflows/windows-agent-validate.yml"
   workflow_dispatch:
 
@@ -51,4 +53,10 @@ jobs:
         shell: cmd
         run: |
           call agent\Start-Executador.cmd SELFTEST
+          if errorlevel 1 exit /b 1
+
+      - name: Validate direct PC launcher and local GUI engine
+        shell: cmd
+        run: |
+          call agent\Executador-PC.cmd SELFTEST
           if errorlevel 1 exit /b 1
