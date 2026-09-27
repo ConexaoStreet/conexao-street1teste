@@ -1,22 +1,27 @@
-# Conexão Street — Teste
+# Executador — Painel Web
 
-Repositório de teste/protótipo de uma página da Conexão Street.
+Painel PWA para controlar o backend **Executador** no Supabase e acompanhar diagnóstico e reparo de PCs pelo celular.
 
-## Tecnologias
+## Recursos
 
-- HTML
-- Tailwind CSS via CDN
-- Font Awesome
-- AOS
+- Login e cadastro via Supabase Auth
+- Pareamento do PC por código ou QR
+- Status online/offline
+- Diagnóstico rápido e Windows profundo
+- Problemas encontrados em tempo real
+- Inventário de aplicativos instalados
+- Fila de reparos com confirmação
+- "Corrigir seguros" limitado a ações de baixo risco
+- Atualização em tempo real via Supabase Realtime
+- PWA instalável no celular
+- Deploy automático no GitHub Pages
 
-## Objetivo
+## Backend
 
-Este projeto foi usado para experimentar layout, identidade visual e estrutura de uma versão da Conexão Street.
+Supabase: `executador` — projeto `skzyxapvleyktmgshvfp`.
 
-## Observação
+O navegador utiliza somente a **publishable key** pública. Chaves secretas e service-role permanecem exclusivamente no backend.
 
-Para desenvolvimento atual da marca, consulte também o repositório **ConexaoStreetv2**.
+## Arquitetura
 
----
-
-**Última atividade registrada:** 12/04/2026
+Celular / navegador → Painel PWA → Supabase Auth + agent-api → Executador Agent no Windows → diagnóstico/reparo local.

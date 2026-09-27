@@ -1,0 +1,11 @@
+{
+  "name": "Executador - PC Health & Repair",
+  "short_name": "Executador",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050908",
+  "theme_color": "#07110e",
+  "description": "Painel remoto de diagnóstico e reparo de PC.",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

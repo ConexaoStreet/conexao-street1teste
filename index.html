@@ -1,796 +1,187 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Conexão Street • CxSt — Fornecedores brasileiros com qualidade importada. Streetwear, Sportlife e Grafite Premium. Maior qualidade, menor preço. Guarulhos, SP.">
-    <meta name="keywords" content="conexão street, cxst, streetwear brasil, fornecedor nacional, qualidade importada, moletom premium, calça cargo, sportlife">
-    <meta property="og:title" content="Conexão Street | CxSt — Qualidade Importada, Preço Nacional">
-    <meta property="og:description" content="A loja que conecta lojistas e consumidores finais à melhor qualidade de importado com preço brasileiro.">
-    <meta property="og:image" content="https://picsum.photos/id/1015/1200/630">
-    <meta property="og:url" content="https://seuusuario.github.io/conexao-street">
-    <title>Conexão Street • CxSt | Qualidade Importada • Preço Nacional</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
-
-        :root {
-            --purple: #a020f0;
-            --purple-dark: #6b0eb3;
-            --black: #0a0a0a;
-            --gray: #111111;
-        }
-
-        * {
-            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform, box-shadow, opacity;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: 150ms;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            overflow-x: hidden;
-        }
-
-        .tailwind-ready {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-
-        .logo-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .hero-bg {
-            background:
-                linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.95) 100%),
-                url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat fixed;
-        }
-
-        .neon-purple {
-            text-shadow:
-                0 0 20px #a020f0,
-                0 0 40px #a020f0;
-        }
-
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-hover:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 25px 50px -12px rgb(160 32 240 / 0.6);
-        }
-
-        .glass {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
-            line-height: 1.1;
-        }
-
-        .navbar-scrolled {
-            background: rgba(10, 10, 10, 0.95) !important;
-            box-shadow: 0 10px 30px -10px rgba(160, 32, 240, 0.3);
-        }
-
-        .product-price {
-            font-feature-settings: "tnum";
-        }
-
-        details summary::-webkit-details-marker {
-            display: none;
-        }
-
-        @media (max-width: 1024px) {
-            .section-title {
-                font-size: 2.7rem;
-            }
-
-            .hero-bg {
-                background:
-                    linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.95) 100%),
-                    url('https://picsum.photos/id/1015/1600/1200') center/cover no-repeat;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2.2rem;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07110e">
+<meta name="description" content="Executador — diagnóstico e reparo remoto de PC pelo celular.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg">
+<title>Executador — PC Health & Repair</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<style>
+:root{--bg:#050908;--card:#0b1512;--line:#183128;--txt:#eefaf5;--mut:#8ba198;--green:#4ff7ad;--cyan:#31c7ff;--amber:#ffb454;--red:#ff6577;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#0e251c,transparent 34%),radial-gradient(circle at 100% 22%,#071c27,transparent 28%),var(--bg);color:var(--txt);min-height:100vh}button,input{font:inherit}.hide{display:none!important}.glass{background:#0b1512e8;border:1px solid #8cffd21c;box-shadow:0 24px 70px #0007;backdrop-filter:blur(16px)}.btn{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#09110f;color:var(--txt);font-weight:750;cursor:pointer}.btn:hover{border-color:#4ff7ad66}.primary{background:linear-gradient(135deg,var(--green),#2bdc91);color:#03100b;border:0}.auth{min-height:100vh;display:grid;place-items:center;padding:22px}.login{width:min(460px,100%);padding:30px;border-radius:24px}.brand{display:flex;align-items:center;gap:11px;font-weight:900}.logo{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),var(--cyan));color:#04110c;font-size:22px}.brand small{display:block;color:var(--mut);font-weight:500}.login h1{font-size:34px;line-height:1.05;margin:30px 0 10px}.muted{color:var(--mut)}.form{display:grid;gap:12px;margin-top:22px}.form label{display:grid;gap:6px;font-size:13px;color:#b8cac4}.form input,.search{border:1px solid var(--line);background:#06100d;color:var(--txt);padding:12px;border-radius:11px;outline:none}.msg{min-height:20px;color:var(--mut);font-size:13px}.shell{display:grid;grid-template-columns:226px 1fr;gap:14px;padding:14px}.side{height:calc(100vh - 28px);position:sticky;top:14px;border-radius:20px;padding:18px;display:flex;flex-direction:column}.nav{display:grid;gap:6px;margin-top:30px}.nav button{border:0;background:transparent;color:#86a096;text-align:left;padding:11px;border-radius:10px;cursor:pointer}.nav button.on,.nav button:hover{background:#4ff7ad12;color:var(--txt)}.bottom{margin-top:auto}.main{min-width:0;padding:4px 8px 80px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:8px 0 18px}.top h2{margin:0}.ey{font-size:10px;letter-spacing:.17em;color:#6f9184;font-weight:900;margin:0 0 5px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.view{display:none}.view.on{display:block}.hero{border-radius:22px;padding:28px;display:flex;justify-content:space-between;align-items:center;min-height:220px}.hero h3{font-size:29px;margin:0 0 8px}.hero p{color:var(--mut);max-width:650px}.score{width:135px;height:135px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#07100d 55%,transparent 57%),conic-gradient(var(--green) var(--s,0%),#ffffff12 0);font-size:33px;font-weight:900}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}.stat,.panel{border-radius:16px;padding:17px}.stat small{display:block;color:var(--mut)}.stat b{font-size:27px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.head h3{margin:0}.list{display:grid;gap:8px}.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid #ffffff0d;border-radius:12px;background:#ffffff05}.item strong,.item small{display:block}.item small{color:var(--mut);margin-top:3px}.badge{font-size:10px;font-weight:850;padding:5px 8px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}.online,.completed,.succeeded{color:var(--green);border-color:#4ff7ad44}.medium,.warning,.queued,.running,.leased{color:var(--amber);border-color:#ffb45444}.high,.critical,.fail,.failed{color:var(--red);border-color:#ff657744}.devices{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}.device{padding:16px;border:1px solid var(--line);border-radius:15px;cursor:pointer;background:#ffffff04}.device.sel{border-color:#4ff7ad66;background:#4ff7ad0a}.device h4{margin:12px 0 4px}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.act{padding:20px;border-radius:16px}.act h3{margin:10px 0 6px}.act p{color:var(--mut);min-height:54px}.softrow{display:grid;grid-template-columns:1.5fr .8fr .7fr;gap:10px;padding:11px;border-bottom:1px solid #ffffff0b}.softrow small{color:var(--mut)}.empty{text-align:center;padding:24px;color:var(--mut);border:1px dashed var(--line);border-radius:12px}.modal{width:min(430px,calc(100% - 20px));border-radius:20px;padding:24px;color:var(--txt)}.modal::backdrop{background:#000b;backdrop-filter:blur(6px)}.code{text-align:center;font:900 29px ui-monospace,monospace;letter-spacing:.15em;color:var(--green);background:#06100c;border:1px solid #4ff7ad44;border-radius:13px;padding:16px;margin:16px 0}.qr{display:grid;place-items:center;background:#fff;border-radius:10px;width:max-content;margin:14px auto;padding:8px}.toast{position:fixed;right:18px;bottom:18px;z-index:30;background:#10201a;border:1px solid #4ff7ad44;border-radius:11px;padding:11px 14px}.mobile{display:none}@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.grid2,.actions{grid-template-columns:1fr}.shell{grid-template-columns:190px 1fr}.side{padding:13px}.score{opacity:.35}}@media(max-width:680px){.shell{display:block;padding:0}.side{display:none}.main{padding:14px 11px 92px}.top{padding-top:5px}.cloud{display:none}.hero{padding:21px;display:block;position:relative;overflow:hidden}.hero h3{font-size:24px}.score{position:absolute;right:-15px;top:-15px}.softrow{grid-template-columns:1.5fr .7fr}.softrow>:nth-child(2){display:none}.mobile{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:9px;right:9px;bottom:9px;z-index:20;border-radius:16px;padding:6px}.mobile button{border:0;background:transparent;color:#789087;padding:8px;border-radius:10px}.mobile button.on{color:var(--green);background:#4ff7ad12}.toast{left:11px;right:11px;bottom:78px}}
+</style>
 </head>
-<body class="tailwind-ready bg-[#0a0a0a] text-white">
+<body>
+<section id="auth" class="auth">
+  <div class="login glass">
+    <div class="brand"><span class="logo">E</span><div>Executador<small>PC Health & Repair</small></div></div>
+    <h1>Seu PC no controle do celular.</h1>
+    <p class="muted">Diagnóstico, aplicativos corrompidos e reparos autorizados em tempo real.</p>
+    <form id="form" class="form">
+      <label>E-mail<input id="email" type="email" required autocomplete="email"></label>
+      <label>Senha<input id="pass" type="password" minlength="6" required autocomplete="current-password"></label>
+      <button id="submit" class="btn primary">Entrar</button>
+    </form>
+    <button id="toggle" class="btn" style="width:100%;margin-top:8px">Criar conta</button>
+    <p id="msg" class="msg"></p>
+  </div>
+</section>
 
-    <!-- NAVBAR PREMIUM -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-xl">
-        <div class="max-w-screen-2xl mx-auto px-5 md:px-8 py-4 md:py-5 flex items-center justify-between gap-4">
-
-            <!-- Logo -->
-            <div class="flex items-center gap-x-3 min-w-0">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#a020f0] to-[#6b0eb3] rounded-2xl flex items-center justify-center text-2xl font-bold logo-font shadow-[0_0_25px_#a020f0] shrink-0">Cx</div>
-                <span class="logo-font text-3xl md:text-4xl font-semibold tracking-[-2px] neon-purple">ST</span>
-                <span class="hidden md:block text-xs font-medium tracking-[3px] text-[#a020f0] mt-2">CONEXÃO STREET</span>
-            </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center gap-x-10 text-lg font-medium">
-                <a href="index.html" class="hover:text-[#a020f0] flex items-center gap-x-1"><i class="fa-solid fa-house"></i> Início</a>
-                <a href="sobre.html" class="hover:text-[#a020f0]">Sobre</a>
-                <a href="produtos.html" class="hover:text-[#a020f0]">Loja</a>
-                <a href="contato.html" class="hover:text-[#a020f0]">Contato</a>
-            </div>
-
-            <!-- Actions -->
-            <div class="flex items-center gap-x-3 md:gap-x-6">
-                <a href="https://www.instagram.com/con.exaostreet01" target="_blank"
-                   class="flex items-center justify-center w-11 h-11 rounded-2xl hover:bg-white/10 text-2xl">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-
-                <button onclick="toggleCart()" class="flex items-center justify-center w-11 h-11 rounded-2xl hover:bg-white/10 text-2xl relative">
-                    <i class="fa-solid fa-shopping-bag"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-[#a020f0] text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-                </button>
-
-                <a href="https://wa.me/5511919730067?text=Olá!%20Vim%20do%20site%20CxSt%20e%20quero%20conhecer%20os%20produtos" target="_blank"
-                   class="bg-[#a020f0] hover:bg-[#c04cff] text-white px-5 md:px-8 py-3 rounded-3xl font-semibold flex items-center gap-x-3 shadow-[0_0_30px_#a020f0]">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    <span class="hidden md:block">WhatsApp</span>
-                </a>
-
-                <button onclick="toggleMobileMenu()" class="lg:hidden text-3xl">
-                    <i id="hamburger-icon" class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-[#0a0a0a] border-t border-white/10 px-5 md:px-8 py-6">
-            <div class="flex flex-col gap-y-6 text-lg md:text-xl">
-                <a href="index.html" class="flex items-center gap-x-3"><i class="fa-solid fa-house w-6"></i> Início</a>
-                <a href="sobre.html" class="flex items-center gap-x-3">Sobre a CxSt</a>
-                <a href="produtos.html" class="flex items-center gap-x-3">Loja Completa</a>
-                <a href="contato.html" class="flex items-center gap-x-3">Fale Conosco</a>
-                <div class="pt-6 border-t border-white/10">
-                    <a href="https://wa.me/5511919730067" target="_blank" class="block w-full bg-[#a020f0] text-center py-4 rounded-3xl font-semibold text-lg">
-                        Falar no WhatsApp agora
-                    </a>
-                </div>
-            </div>
-        </div>
+<div id="app" class="shell hide">
+  <aside class="side glass">
+    <div class="brand"><span class="logo">E</span><div>Executador<small>Control Center</small></div></div>
+    <nav class="nav">
+      <button class="on" data-view="home">◈ Visão geral</button>
+      <button data-view="pcs">▣ Dispositivos</button>
+      <button data-view="scan">⌁ Diagnósticos</button>
+      <button data-view="issues">! Problemas</button>
+      <button data-view="apps">▦ Aplicativos</button>
+      <button data-view="fixes">↻ Reparos</button>
     </nav>
+    <div class="bottom"><button id="logout" class="btn" style="width:100%">Sair</button></div>
+  </aside>
 
-    <!-- HERO ÉPICO -->
-    <header id="hero" class="hero-bg min-h-screen flex items-center relative pt-28 md:pt-32">
-        <div class="max-w-screen-2xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-12 items-center w-full py-12">
-
-            <div class="space-y-8" data-aos="fade-up">
-                <div class="inline-flex items-center gap-x-3 bg-white/10 text-white text-xs md:text-sm font-medium px-5 py-3 rounded-3xl border border-white/20">
-                    <span class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#a020f0] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-[#a020f0]"></span>
-                    </span>
-                    LANÇAMENTO FEVEREIRO 2026 — GUARULHOS, SP
-                </div>
-
-                <h1 class="text-5xl sm:text-6xl lg:text-[92px] leading-[1.05] font-bold logo-font tracking-[-3px] md:tracking-[-4px] neon-purple">
-                    CONEXÃO<br>STREET
-                </h1>
-
-                <p class="text-2xl md:text-3xl lg:text-4xl text-white/90 max-w-lg">
-                    Qualidade de <span class="text-[#a020f0]">importado</span>.<br>
-                    Preço de <span class="text-white">nacional</span>.
-                </p>
-
-                <div class="flex flex-wrap gap-4">
-                    <button onclick="document.getElementById('destaques').scrollIntoView({ behavior: 'smooth' })"
-                       class="bg-[#a020f0] hover:bg-[#c04cff] px-7 md:px-10 py-4 md:py-6 rounded-3xl text-lg md:text-2xl font-semibold flex items-center gap-x-4 shadow-2xl shadow-[#a020f0]/50">
-                        Ver Coleção
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-
-                    <a href="https://wa.me/5511919730067" target="_blank"
-                       class="border-2 border-white/60 hover:border-[#a020f0] px-7 md:px-10 py-4 md:py-6 rounded-3xl text-lg md:text-2xl font-semibold flex items-center gap-x-4">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        Falar com Vítor
-                    </a>
-                </div>
-
-                <div class="flex flex-wrap gap-4 md:gap-x-8 text-sm">
-                    <div class="flex items-center gap-x-2">
-                        <i class="fa-solid fa-check text-[#a020f0]"></i>
-                        <span class="font-medium">Direto do fornecedor</span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <i class="fa-solid fa-check text-[#a020f0]"></i>
-                        <span class="font-medium">Atendimento para lojistas</span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <i class="fa-solid fa-check text-[#a020f0]"></i>
-                        <span class="font-medium">Entrega nacional</span>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 text-white/70 text-sm pt-6 border-t border-white/10">
-                    <div>⭐⭐⭐⭐⭐ <span class="font-semibold text-white">4.98 (127 avaliações)</span></div>
-                    <div class="flex items-center gap-x-4">
-                        <i class="fa-brands fa-instagram"></i>
-                        <span>@con.exaostreet01</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hero visual direito -->
-            <div class="hidden lg:flex justify-end relative" data-aos="fade-left">
-                <div class="relative">
-                    <div class="absolute -top-12 -left-12 w-72 h-72 bg-[#a020f0]/10 rounded-[4rem] rotate-12 flex items-center justify-center text-[180px] font-black logo-font text-white/10">CxSt</div>
-                    <img src="https://picsum.photos/id/1005/800/900" alt="CxSt Premium Streetwear"
-                         class="rounded-3xl shadow-2xl shadow-[#a020f0]/40 w-full max-w-[420px] object-cover border border-white/10">
-                    <div class="absolute -bottom-6 right-6 glass px-8 py-6 rounded-3xl flex items-center gap-x-4 text-lg font-semibold">
-                        <div class="text-[#a020f0] text-5xl">2026</div>
-                        <div>
-                            Coleção<br>
-                            <span class="text-white/80">Streetlife</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div onclick="document.getElementById('destaques').scrollIntoView({ behavior: 'smooth' })"
-             class="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer">
-            <div class="text-[10px] md:text-xs tracking-[2px] mb-3">ROLE PARA CONHECER</div>
-            <i class="fa-solid fa-chevron-down text-2xl md:text-3xl animate-bounce"></i>
-        </div>
-
-        <a href="https://wa.me/5511919730067" target="_blank"
-           class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 bg-[#25D366] text-white w-14 h-14 md:w-16 md:h-16 rounded-3xl flex items-center justify-center text-3xl md:text-4xl shadow-2xl shadow-[#25D366]/60 hover:scale-110">
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
+  <main class="main">
+    <header class="top">
+      <div><p class="ey">CENTRAL DE MANUTENÇÃO</p><h2 id="title">Visão geral</h2></div>
+      <div class="row"><span class="badge online cloud">● Nuvem conectada</span><button class="btn primary" data-pair>+ Conectar PC</button></div>
     </header>
 
-    <!-- DESTAQUES / LOJA -->
-    <section id="destaques" class="max-w-screen-2xl mx-auto px-5 md:px-8 py-20 md:py-24">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-            <div>
-                <span class="uppercase text-[#a020f0] font-semibold tracking-[2px]">Novos Drops</span>
-                <h2 class="section-title" data-aos="fade-up">O que está bombando na CxSt</h2>
-            </div>
-            <a href="produtos.html" class="hidden md:flex items-center gap-x-3 group text-xl font-medium">
-                Ver toda a loja
-                <span class="text-4xl group-hover:translate-x-2">→</span>
-            </a>
+    <section id="view-home" class="view on">
+      <div class="hero glass">
+        <div>
+          <p class="ey">STATUS GERAL</p>
+          <h3 id="heroTitle">Conecte seu primeiro computador</h3>
+          <p id="heroSub">Instale o agente do Windows e faça o pareamento pelo código.</p>
+          <div class="row"><button id="quick" class="btn primary">Diagnóstico rápido</button><button id="deep" class="btn">Windows profundo</button></div>
         </div>
-
-        <div id="featured-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            <!-- JS populated -->
-        </div>
+        <div id="score" class="score">--</div>
+      </div>
+      <div class="stats">
+        <div class="stat glass"><small>Dispositivos</small><b id="nDev">0</b></div>
+        <div class="stat glass"><small>Problemas</small><b id="nIssue">0</b></div>
+        <div class="stat glass"><small>Reparos pendentes</small><b id="nFix">0</b></div>
+        <div class="stat glass"><small>Aplicativos</small><b id="nApp">0</b></div>
+      </div>
+      <div class="grid2">
+        <div class="panel glass"><div class="head"><h3>Seus PCs</h3></div><div id="homePcs" class="list"></div></div>
+        <div class="panel glass"><div class="head"><h3>Prioridades</h3></div><div id="homeIssues" class="list"></div></div>
+      </div>
     </section>
 
-    <!-- DIFERENCIAIS PREMIUM -->
-    <section class="bg-[#111111] py-20 md:py-24">
-        <div class="max-w-screen-2xl mx-auto px-5 md:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">Por que a Conexão Street é diferente?</h2>
+    <section id="view-pcs" class="view"><div class="panel glass"><div class="head"><h3>Dispositivos pareados</h3><button class="btn primary" data-pair>+ Conectar PC</button></div><div id="pcs" class="devices"></div></div></section>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass p-10 rounded-3xl card-hover" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fa-solid fa-crown text-6xl text-[#a020f0] mb-6"></i>
-                    <h3 class="text-3xl font-semibold mb-4">Qualidade importada</h3>
-                    <p class="text-white/70 text-lg">Tecidos, costura, caimento e acabamento idênticos aos grandes nomes internacionais. Tudo feito por fornecedores brasileiros premium.</p>
-                    <div class="mt-8 text-[#a020f0] flex items-center gap-x-2 text-sm font-medium">VERIFICADO POR LOJISTAS <i class="fa-solid fa-arrow-right"></i></div>
-                </div>
-
-                <div class="glass p-10 rounded-3xl card-hover" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fa-solid fa-bolt text-6xl text-[#a020f0] mb-6"></i>
-                    <h3 class="text-3xl font-semibold mb-4">Menor preço do mercado</h3>
-                    <p class="text-white/70 text-lg">Sem importação, sem imposto alto, sem intermediários. Você paga nacional e leva importado.</p>
-                    <div class="mt-8 text-[#a020f0] flex items-center gap-x-2 text-sm font-medium">PREÇO JUSTO GARANTIDO</div>
-                </div>
-
-                <div class="glass p-10 rounded-3xl card-hover" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fa-solid fa-handshake text-6xl text-[#a020f0] mb-6"></i>
-                    <h3 class="text-3xl font-semibold mb-4">Confiança total</h3>
-                    <p class="text-white/70 text-lg">Atendimento humano via WhatsApp, ticket no site e e-mail. Vítor responde pessoalmente.</p>
-                    <div class="mt-8 text-[#a020f0] flex items-center gap-x-2 text-sm font-medium">+55 11 91973-0067</div>
-                </div>
-            </div>
-        </div>
+    <section id="view-scan" class="view">
+      <div class="actions">
+        <div class="act glass"><b>⚡</b><h3>Verificação rápida</h3><p>CPU, RAM, armazenamento, rede, segurança e aplicativos.</p><button class="btn primary" data-scan="quick">Iniciar</button></div>
+        <div class="act glass"><b>◉</b><h3>Windows profundo</h3><p>MSI/MSIX, runtimes, Component Store, drivers, serviços e eventos.</p><button class="btn" data-scan="windows_deep">Iniciar</button></div>
+        <div class="act glass"><b>✓</b><h3>Corrigir seguros</h3><p>Enfileira somente ações de baixo risco e sem privilégio administrativo.</p><button id="safe" class="btn">Executar</button></div>
+      </div>
+      <div class="panel glass" style="margin-top:10px"><div class="head"><h3>Histórico</h3></div><div id="scans" class="list"></div></div>
     </section>
 
-    <!-- MISSÃO + VISÃO + VALORES -->
-    <section class="max-w-screen-2xl mx-auto px-5 md:px-8 py-20 md:py-24 grid lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-4 space-y-8" data-aos="fade-right">
-            <div class="border-l-4 border-[#a020f0] pl-8">
-                <h3 class="uppercase text-[#a020f0] tracking-widest text-sm">Missão</h3>
-                <p class="text-3xl md:text-4xl leading-tight font-semibold">Maior qualidade pelo menor preço possível.</p>
-            </div>
-            <div class="border-l-4 border-[#a020f0] pl-8">
-                <h3 class="uppercase text-[#a020f0] tracking-widest text-sm">Visão</h3>
-                <p class="text-3xl md:text-4xl leading-tight font-semibold">Ser a referência brasileira em fornecedores com padrão de qualidade importada.</p>
-            </div>
-            <div class="border-l-4 border-[#a020f0] pl-8">
-                <h3 class="uppercase text-[#a020f0] tracking-widest text-sm">Valores</h3>
-                <p class="text-3xl md:text-4xl leading-tight font-semibold">Qualidade • Confiança • Preço justo • Estilo • Compromisso</p>
-            </div>
-        </div>
+    <section id="view-issues" class="view"><div class="panel glass"><div class="head"><h3>Problemas encontrados</h3></div><div id="issues" class="list"></div></div></section>
 
-        <div class="lg:col-span-8 bg-gradient-to-br from-[#a020f0]/10 to-transparent rounded-3xl p-10 lg:p-16" data-aos="fade-left">
-            <div class="max-w-md">
-                <span class="text-[#a020f0] font-medium">Fundada em fevereiro de 2026 • Guarulhos, SP</span>
-                <h2 class="text-4xl md:text-5xl font-semibold mt-4 leading-none">Criada por quem entende de street e sportlife.</h2>
-                <p class="mt-8 text-lg text-white/80">Vítor Lucas Souza Santos montou a Conexão Street para resolver o problema que todo lojista e consumidor enfrenta: pagar caro por qualidade importada ou aceitar produtos ruins. Aqui você não precisa escolher.</p>
-                <a href="sobre.html" class="mt-12 inline-flex items-center gap-x-4 text-xl font-medium">
-                    Conheça nossa história completa
-                    <span class="text-4xl">→</span>
-                </a>
-            </div>
-        </div>
-    </section>
+    <section id="view-apps" class="view"><div class="panel glass"><div class="head"><h3>Aplicativos instalados</h3><input id="findApp" class="search" placeholder="Buscar aplicativo"></div><div id="appsList"></div></div></section>
 
-    <!-- DEPOIMENTOS -->
-    <section class="bg-[#111] py-20 md:py-24">
-        <div class="max-w-screen-2xl mx-auto px-5 md:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">O que nossos clientes estão falando</h2>
+    <section id="view-fixes" class="view"><div class="panel glass"><div class="head"><h3>Fila e histórico de reparos</h3></div><div id="fixes" class="list"></div></div></section>
+  </main>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up">
-                    <div class="flex gap-x-1 text-[#a020f0] mb-6">★★★★★</div>
-                    <p class="text-lg">"Melhor custo-benefício que já vi em streetwear nacional. O moletom tem caimento idêntico ao importado que eu comprava por 3x o preço."</p>
-                    <div class="mt-8 flex items-center gap-x-4">
-                        <div class="w-10 h-10 bg-white/10 rounded-2xl"></div>
-                        <div>
-                            <div class="font-semibold">Lucas Mendes</div>
-                            <div class="text-white/60 text-sm">Lojista - São Paulo</div>
-                        </div>
-                    </div>
-                </div>
+  <nav class="mobile glass">
+    <button class="on" data-view="home">◈<small>Início</small></button>
+    <button data-view="pcs">▣<small>PCs</small></button>
+    <button data-view="issues">!<small>Problemas</small></button>
+    <button data-view="fixes">↻<small>Reparos</small></button>
+  </nav>
+</div>
 
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex gap-x-1 text-[#a020f0] mb-6">★★★★★</div>
-                    <p class="text-lg">"Comprei 18 peças para minha loja. Chegou tudo perfeito e em 4 dias. Já fiz o segundo pedido."</p>
-                    <div class="mt-8 flex items-center gap-x-4">
-                        <div class="w-10 h-10 bg-white/10 rounded-2xl"></div>
-                        <div>
-                            <div class="font-semibold">Mariana Costa</div>
-                            <div class="text-white/60 text-sm">Dona de loja - Rio de Janeiro</div>
-                        </div>
-                    </div>
-                </div>
+<dialog id="pair" class="modal glass">
+  <div class="head"><h3>Conectar computador</h3><button id="close" class="btn">×</button></div>
+  <p class="muted">Abra o Executador Agent no Windows e digite o código abaixo ou escaneie o QR.</p>
+  <div id="code" class="code">----</div>
+  <div id="qr" class="qr"></div>
+  <p id="pairState" class="muted">Gerando código...</p>
+  <button id="copy" class="btn" style="width:100%">Copiar código</button>
+</dialog>
+<div id="toast" class="toast hide"></div>
 
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex gap-x-1 text-[#a020f0] mb-6">★★★★★</div>
-                    <p class="text-lg">"O grafite nas peças é surreal. Qualidade impecável e o preço... nem parece brasileiro."</p>
-                    <div class="mt-8 flex items-center gap-x-4">
-                        <div class="w-10 h-10 bg-white/10 rounded-2xl"></div>
-                        <div>
-                            <div class="font-semibold">Renan Oliveira</div>
-                            <div class="text-white/60 text-sm">Cliente final - Guarulhos</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<script type="module">
+import {createClient} from "https://esm.sh/@supabase/supabase-js@2.95.0";
+const URL="https://skzyxapvleyktmgshvfp.supabase.co";
+const KEY="sb_publishable_6ah677Fpu1_PO7uamBBZYA_gfNqmOWo";
+const API=URL+"/functions/v1/agent-api";
+const supabase=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const st={devices:[],issues:[],scans:[],fixes:[],actions:[],apps:[],selected:null,channel:null,timer:null,mode:"login"};
+const titles={home:"Visão geral",pcs:"Dispositivos",scan:"Diagnósticos",issues:"Problemas",apps:"Aplicativos",fixes:"Reparos"};
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+const empty=t=>'<div class="empty">'+esc(t)+'</div>';
+const label=s=>({online:"Online",offline:"Offline",degraded:"Degradado",queued:"Na fila",leased:"Preparando",running:"Executando",completed:"Concluído",succeeded:"Concluído",failed:"Falhou",warning:"Atenção",critical:"Crítico",high:"Alto",medium:"Médio"}[s]||s||"—");
+const badge=(t,c)=>'<span class="badge '+esc(c||"")+'">'+esc(t)+'</span>';
+const ago=d=>{if(!d)return"nunca";const n=Math.max(0,Date.now()-new Date(d).getTime()),m=Math.floor(n/60000);if(m<1)return"agora";if(m<60)return"há "+m+" min";const h=Math.floor(m/60);if(h<24)return"há "+h+" h";return"há "+Math.floor(h/24)+" d"};
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.remove("hide");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.add("hide"),2800)}
+async function session(){return (await supabase.auth.getSession()).data.session}
+async function api(path,opt={}){const s=await session();if(!s)throw new Error("Sessão expirada");const r=await fetch(API+path,{...opt,headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+s.access_token,...(opt.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||d.details||"Erro na API");return d}
+function view(v){$$(".view").forEach(x=>x.classList.toggle("on",x.id==="view-"+v));$$("[data-view]").forEach(x=>x.classList.toggle("on",x.dataset.view===v));$("#title").textContent=titles[v]||"Executador"}
+$$("[data-view]").forEach(x=>x.onclick=()=>view(x.dataset.view));
 
-            <div class="mt-14 grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white/5 rounded-3xl p-6 text-center border border-white/10">
-                    <div class="text-4xl font-bold text-[#a020f0]">+1.2k</div>
-                    <p class="text-white/70 mt-2">Peças consultadas</p>
-                </div>
-                <div class="bg-white/5 rounded-3xl p-6 text-center border border-white/10">
-                    <div class="text-4xl font-bold text-[#a020f0]">127</div>
-                    <p class="text-white/70 mt-2">Avaliações positivas</p>
-                </div>
-                <div class="bg-white/5 rounded-3xl p-6 text-center border border-white/10">
-                    <div class="text-4xl font-bold text-[#a020f0]">4.98</div>
-                    <p class="text-white/70 mt-2">Nota média</p>
-                </div>
-                <div class="bg-white/5 rounded-3xl p-6 text-center border border-white/10">
-                    <div class="text-4xl font-bold text-[#a020f0]">24h</div>
-                    <p class="text-white/70 mt-2">Atendimento rápido</p>
-                </div>
-            </div>
-        </div>
-    </section>
+$("#toggle").onclick=()=>{st.mode=st.mode==="login"?"signup":"login";$("#submit").textContent=st.mode==="login"?"Entrar":"Criar conta";$("#toggle").textContent=st.mode==="login"?"Criar conta":"Já tenho conta";$("#msg").textContent=""};
+$("#form").onsubmit=async e=>{e.preventDefault();$("#submit").disabled=true;$("#msg").textContent="";try{let res=st.mode==="login"?await supabase.auth.signInWithPassword({email:$("#email").value,password:$("#pass").value}):await supabase.auth.signUp({email:$("#email").value,password:$("#pass").value});if(res.error)throw res.error;if(st.mode==="signup"&&!res.data.session)$("#msg").textContent="Conta criada. Confirme o e-mail e depois entre.";else await start()}catch(err){$("#msg").textContent=err.message||String(err)}finally{$("#submit").disabled=false}};
+$("#logout").onclick=async()=>{await supabase.auth.signOut();location.reload()};
 
-    <!-- COMO FUNCIONA -->
-    <section class="max-w-screen-2xl mx-auto px-5 md:px-8 py-20 md:py-24">
-        <div class="text-center mb-16">
-            <span class="uppercase text-[#a020f0] font-semibold tracking-[2px]">Processo simples</span>
-            <h2 class="section-title mt-3" data-aos="fade-up">Como comprar na CxSt</h2>
-            <p class="text-white/70 text-lg mt-4 max-w-2xl mx-auto">
-                Seja para lojista ou cliente final, o processo é rápido, humano e direto ao ponto.
-            </p>
-        </div>
+async function start(){const s=await session();$("#auth").classList.toggle("hide",!!s);$("#app").classList.toggle("hide",!s);if(!s)return;await load();realtime()}
+async function load(){
+ const r=await Promise.all([
+  supabase.from("device_health_overview").select("*").order("last_seen_at",{ascending:false,nullsFirst:false}),
+  supabase.from("findings").select("*").in("state",["open","in_progress","recurring"]).order("last_seen_at",{ascending:false}).limit(100),
+  supabase.from("scan_runs").select("*").order("created_at",{ascending:false}).limit(30),
+  supabase.from("repair_jobs").select("*,repair_actions(action_key,name,risk_level,requires_admin,requires_reboot)").order("queued_at",{ascending:false}).limit(50),
+  supabase.from("repair_actions").select("*").eq("enabled",true)
+ ]);
+ st.devices=r[0].data||[];st.issues=r[1].data||[];st.scans=r[2].data||[];st.fixes=r[3].data||[];st.actions=r[4].data||[];
+ if(!st.selected||!st.devices.some(x=>x.device_id===st.selected))st.selected=st.devices[0]?.device_id||null;
+ st.apps=[];
+ if(st.selected){const a=await supabase.from("software_inventory").select("*").eq("device_id",st.selected).eq("is_present",true).order("name").limit(700);st.apps=a.data||[]}
+ render()
+}
+const action=k=>st.actions.find(x=>x.action_key===k);
+function devItem(x){return'<div class="item"><div><strong>'+esc(x.display_name)+'</strong><small>'+esc(x.platform)+' '+esc(x.platform_version||"")+' • '+ago(x.last_seen_at)+'</small></div>'+badge(label(x.status),x.status)+'</div>'}
+function issueItem(x){const a=action(x.recommended_action_key);return'<div class="item"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.summary||x.category)+'</small></div><div class="row">'+badge(String(x.severity||"medium").toUpperCase(),x.severity)+(a?'<button class="btn" data-fix="'+x.id+'" data-action="'+esc(a.action_key)+'">Reparar</button>':"")+'</div></div>'}
+function render(){
+ const s=st.devices.find(x=>x.device_id===st.selected);
+ $("#nDev").textContent=st.devices.length;$("#nIssue").textContent=st.issues.length;$("#nFix").textContent=st.fixes.filter(x=>["queued","leased","running"].includes(x.status)).length;$("#nApp").textContent=st.apps.length;
+ $("#heroTitle").textContent=s?s.display_name:"Conecte seu primeiro computador";
+ $("#heroSub").textContent=s?"Windows "+(s.platform_version||"")+" • "+label(s.status)+" • "+ago(s.last_seen_at):"Instale o agente do Windows e faça o pareamento pelo código.";
+ $("#score").textContent=s?.health_score==null?"--":Math.round(s.health_score)+"%";$("#score").style.setProperty("--s",(s?.health_score||0)+"%");
+ $("#homePcs").innerHTML=st.devices.length?st.devices.slice(0,4).map(devItem).join(""):empty("Nenhum PC conectado.");
+ $("#homeIssues").innerHTML=st.issues.length?st.issues.slice(0,4).map(issueItem).join(""):empty("Nenhum problema aberto.");
+ $("#pcs").innerHTML=st.devices.length?st.devices.map(x=>'<article class="device '+(x.device_id===st.selected?"sel":"")+'" data-pc="'+x.device_id+'"><div class="row" style="justify-content:space-between"><b>▣</b>'+badge(label(x.status),x.status)+'</div><h4>'+esc(x.display_name)+'</h4><small class="muted">'+esc(x.platform_version||"Windows")+' • '+ago(x.last_seen_at)+'</small></article>').join(""):empty("Nenhum PC pareado.");
+ $$("[data-pc]").forEach(x=>x.onclick=async()=>{st.selected=x.dataset.pc;await load();toast("PC selecionado")});
+ $("#scans").innerHTML=st.scans.length?st.scans.map(x=>'<div class="item"><div><strong>'+esc(x.template_key)+'</strong><small>'+new Date(x.created_at).toLocaleString("pt-BR")+'</small></div>'+badge(label(x.status),x.status)+'</div>').join(""):empty("Nenhum diagnóstico ainda.");
+ $("#issues").innerHTML=st.issues.length?st.issues.map(issueItem).join(""):empty("Nenhum problema aberto.");
+ $$("[data-fix]").forEach(x=>x.onclick=()=>repair(x.dataset.fix,x.dataset.action));
+ $("#fixes").innerHTML=st.fixes.length?st.fixes.map(x=>'<div class="item"><div><strong>'+esc(x.repair_actions?.name||"Reparo")+'</strong><small>'+new Date(x.queued_at).toLocaleString("pt-BR")+'</small></div>'+badge(label(x.status),x.status)+'</div>').join(""):empty("Nenhum reparo solicitado.");
+ renderApps()
+}
+function renderApps(){const q=($("#findApp").value||"").toLowerCase();const a=st.apps.filter(x=>!q||(x.name+" "+(x.publisher||"")).toLowerCase().includes(q));$("#appsList").innerHTML=a.length?a.map(x=>'<div class="softrow"><div><strong>'+esc(x.name)+'</strong><small>'+esc(x.publisher||"Publicador desconhecido")+'</small></div><div><small>'+esc(x.version||"—")+'</small></div><div>'+badge(x.update_available?"Atualização":"Instalado",x.update_available?"medium":"completed")+'</div></div>').join(""):empty(st.selected?"Nenhum aplicativo encontrado.":"Selecione um PC.")}
+$("#findApp").oninput=renderApps;
 
-        <div class="grid md:grid-cols-4 gap-6">
-            <div class="glass rounded-3xl p-8 card-hover" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-[#a020f0] text-white flex items-center justify-center text-2xl font-bold mb-6">1</div>
-                <h3 class="text-2xl font-semibold mb-3">Escolha sua peça</h3>
-                <p class="text-white/70">Navegue pelos destaques ou vá direto para a loja completa.</p>
-            </div>
+async function scan(template){if(!st.selected)return toast("Conecte ou selecione um PC");try{await api("/scan/start",{method:"POST",body:JSON.stringify({device_id:st.selected,template_key:template,client_context:{requested_from:"panel"}})});toast("Diagnóstico enviado ao PC");await load();view("scan")}catch(e){toast(e.message)}}
+$("#quick").onclick=()=>scan("quick");$("#deep").onclick=()=>scan("windows_deep");$$("[data-scan]").forEach(x=>x.onclick=()=>scan(x.dataset.scan));
 
-            <div class="glass rounded-3xl p-8 card-hover" data-aos="fade-up" data-aos-delay="100">
-                <div class="w-14 h-14 rounded-2xl bg-[#a020f0] text-white flex items-center justify-center text-2xl font-bold mb-6">2</div>
-                <h3 class="text-2xl font-semibold mb-3">Fale com a CxSt</h3>
-                <p class="text-white/70">Tire dúvidas, confirme disponibilidade e receba atendimento direto.</p>
-            </div>
+async function repair(id,key){const a=action(key);if(!a||!st.selected)return;if(!confirm("Executar “"+a.name+"” neste PC?"+(a.requires_reboot?" Pode exigir reinicialização.":"")))return;try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:key,finding_id:id,idempotency_key:id+":"+key})});toast("Reparo colocado na fila");await load();view("fixes")}catch(e){toast(e.message)}}
+$("#safe").onclick=async()=>{const q=st.issues.map(f=>({f,a:action(f.recommended_action_key)})).filter(x=>x.a&&x.a.risk_level==="low"&&!x.a.requires_admin);if(!q.length)return toast("Sem correções automáticas de baixo risco");if(!confirm("Executar "+q.length+" correção(ões) segura(s)?"))return;for(const x of q){try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:x.a.action_key,finding_id:x.f.id,idempotency_key:x.f.id+":"+x.a.action_key})})}catch{}}toast("Correções adicionadas à fila");load()};
 
-            <div class="glass rounded-3xl p-8 card-hover" data-aos="fade-up" data-aos-delay="200">
-                <div class="w-14 h-14 rounded-2xl bg-[#a020f0] text-white flex items-center justify-center text-2xl font-bold mb-6">3</div>
-                <h3 class="text-2xl font-semibold mb-3">Feche seu pedido</h3>
-                <p class="text-white/70">Receba as orientações de pagamento e escolha a melhor opção.</p>
-            </div>
+const dlg=$("#pair");
+async function pair(){dlg.showModal();$("#code").textContent="----";$("#qr").innerHTML="";$("#pairState").textContent="Gerando código...";try{const d=await api("/pairing/create",{method:"POST",body:"{}"});$("#code").textContent=d.code;$("#pairState").textContent="Aguardando o PC...";if(window.QRCode)new QRCode($("#qr"),{text:JSON.stringify(d.qr_payload),width:140,height:140});clearInterval(st.timer);st.timer=setInterval(async()=>{try{const x=await api("/pairing/status?id="+encodeURIComponent(d.pairing_id));if(x.pairing?.status==="claimed"){clearInterval(st.timer);$("#pairState").textContent="PC conectado!";toast("Novo PC conectado");await load();setTimeout(()=>dlg.close(),900)}}catch{}},2500)}catch(e){$("#pairState").textContent=e.message}}
+$$("[data-pair]").forEach(x=>x.onclick=pair);$("#close").onclick=()=>dlg.close();$("#copy").onclick=()=>navigator.clipboard.writeText($("#code").textContent).then(()=>toast("Código copiado"));dlg.onclose=()=>clearInterval(st.timer);
 
-            <div class="glass rounded-3xl p-8 card-hover" data-aos="fade-up" data-aos-delay="300">
-                <div class="w-14 h-14 rounded-2xl bg-[#a020f0] text-white flex items-center justify-center text-2xl font-bold mb-6">4</div>
-                <h3 class="text-2xl font-semibold mb-3">Receba com confiança</h3>
-                <p class="text-white/70">Entrega nacional com acompanhamento e suporte no pós-venda.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CATEGORIAS -->
-    <section class="bg-[#111111] py-20 md:py-24">
-        <div class="max-w-screen-2xl mx-auto px-5 md:px-8">
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-                <div>
-                    <span class="uppercase text-[#a020f0] font-semibold tracking-[2px]">Categorias</span>
-                    <h2 class="section-title mt-3">O estilo da rua, do esporte e do premium</h2>
-                </div>
-                <a href="produtos.html" class="inline-flex items-center gap-x-3 text-xl font-medium">
-                    Explorar catálogo
-                    <span class="text-4xl">→</span>
-                </a>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="relative overflow-hidden rounded-3xl border border-white/10 min-h-[320px] p-8 flex flex-col justify-end bg-gradient-to-br from-[#a020f0]/30 to-black">
-                    <div class="text-sm uppercase tracking-[2px] text-white/70 mb-2">Streetwear</div>
-                    <h3 class="text-4xl font-semibold logo-font">Drops urbanos</h3>
-                    <p class="text-white/75 mt-4 max-w-sm">Peças com presença, caimento premium e identidade forte.</p>
-                </div>
-
-                <div class="relative overflow-hidden rounded-3xl border border-white/10 min-h-[320px] p-8 flex flex-col justify-end bg-gradient-to-br from-white/10 to-black">
-                    <div class="text-sm uppercase tracking-[2px] text-white/70 mb-2">Sportlife</div>
-                    <h3 class="text-4xl font-semibold logo-font">Conforto e performance</h3>
-                    <p class="text-white/75 mt-4 max-w-sm">Modelos pensados para rotina, treino e estilo no mesmo visual.</p>
-                </div>
-
-                <div class="relative overflow-hidden rounded-3xl border border-white/10 min-h-[320px] p-8 flex flex-col justify-end bg-gradient-to-br from-[#6b0eb3]/40 to-black">
-                    <div class="text-sm uppercase tracking-[2px] text-white/70 mb-2">Grafite Premium</div>
-                    <h3 class="text-4xl font-semibold logo-font">Arte vestível</h3>
-                    <p class="text-white/75 mt-4 max-w-sm">Estética marcante para quem quer sair do básico sem perder qualidade.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="max-w-screen-2xl mx-auto px-5 md:px-8 py-20 md:py-24">
-        <div class="text-center mb-16">
-            <span class="uppercase text-[#a020f0] font-semibold tracking-[2px]">FAQ</span>
-            <h2 class="section-title mt-3">Dúvidas frequentes</h2>
-        </div>
-
-        <div class="max-w-4xl mx-auto space-y-4">
-            <details class="glass rounded-3xl p-6 group" open>
-                <summary class="cursor-pointer list-none flex items-center justify-between text-lg md:text-xl font-semibold">
-                    A Conexão Street vende para lojistas e cliente final?
-                    <i class="fa-solid fa-plus group-open:rotate-45 transition-transform"></i>
-                </summary>
-                <p class="text-white/70 mt-4">
-                    Sim. A CxSt atende tanto lojistas quanto pessoas que querem comprar com mais qualidade pagando menos.
-                </p>
-            </details>
-
-            <details class="glass rounded-3xl p-6 group">
-                <summary class="cursor-pointer list-none flex items-center justify-between text-lg md:text-xl font-semibold">
-                    Os produtos são importados?
-                    <i class="fa-solid fa-plus group-open:rotate-45 transition-transform"></i>
-                </summary>
-                <p class="text-white/70 mt-4">
-                    A proposta da loja é oferecer fornecedores brasileiros com padrão de qualidade importada.
-                </p>
-            </details>
-
-            <details class="glass rounded-3xl p-6 group">
-                <summary class="cursor-pointer list-none flex items-center justify-between text-lg md:text-xl font-semibold">
-                    Como faço para comprar no atacado?
-                    <i class="fa-solid fa-plus group-open:rotate-45 transition-transform"></i>
-                </summary>
-                <p class="text-white/70 mt-4">
-                    Entre em contato pelo WhatsApp da CxSt para alinhar volume, disponibilidade e condições.
-                </p>
-            </details>
-
-            <details class="glass rounded-3xl p-6 group">
-                <summary class="cursor-pointer list-none flex items-center justify-between text-lg md:text-xl font-semibold">
-                    A loja entrega para todo o Brasil?
-                    <i class="fa-solid fa-plus group-open:rotate-45 transition-transform"></i>
-                </summary>
-                <p class="text-white/70 mt-4">
-                    Sim, a entrega é nacional, com suporte e acompanhamento no atendimento.
-                </p>
-            </details>
-        </div>
-    </section>
-
-    <!-- CTA FINAL -->
-    <section class="px-5 md:px-8 pb-20 md:pb-24">
-        <div class="max-w-screen-2xl mx-auto rounded-[2rem] border border-white/10 bg-gradient-to-r from-[#a020f0]/25 via-[#111] to-black p-10 md:p-16 overflow-hidden relative">
-            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_#a020f0,_transparent_35%)]"></div>
-
-            <div class="relative grid lg:grid-cols-2 gap-10 items-center">
-                <div>
-                    <span class="uppercase text-[#a020f0] font-semibold tracking-[2px]">Pronto para subir o nível?</span>
-                    <h2 class="section-title mt-4">Entre na Conexão Street e vista qualidade de verdade.</h2>
-                    <p class="text-white/75 text-lg mt-6 max-w-2xl">
-                        Seja para abastecer loja, montar coleção ou comprar com mais inteligência, a CxSt te conecta ao melhor custo-benefício.
-                    </p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row lg:justify-end gap-4">
-                    <a href="produtos.html" class="bg-[#a020f0] hover:bg-[#c04cff] px-8 py-5 rounded-3xl text-lg font-semibold text-center shadow-[0_0_35px_#a020f0]">
-                        Ver produtos
-                    </a>
-                    <a href="https://wa.me/5511919730067?text=Olá!%20Quero%20atendimento%20na%20Conexão%20Street" target="_blank" class="border border-white/20 hover:border-[#a020f0] px-8 py-5 rounded-3xl text-lg font-semibold text-center">
-                        Falar no WhatsApp
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-white/10 bg-black/40">
-        <div class="max-w-screen-2xl mx-auto px-5 md:px-8 py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div>
-                <div class="flex items-center gap-x-3 mb-5">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#a020f0] to-[#6b0eb3] rounded-2xl flex items-center justify-center text-xl font-bold logo-font">Cx</div>
-                    <span class="logo-font text-3xl font-semibold neon-purple">ST</span>
-                </div>
-                <p class="text-white/65 leading-relaxed">
-                    Conexão Street • CxSt. Fornecedores brasileiros com qualidade importada, preço justo e estilo premium.
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold mb-5">Navegação</h3>
-                <ul class="space-y-3 text-white/70">
-                    <li><a href="index.html" class="hover:text-[#a020f0]">Início</a></li>
-                    <li><a href="sobre.html" class="hover:text-[#a020f0]">Sobre</a></li>
-                    <li><a href="produtos.html" class="hover:text-[#a020f0]">Loja</a></li>
-                    <li><a href="contato.html" class="hover:text-[#a020f0]">Contato</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold mb-5">Contato</h3>
-                <ul class="space-y-3 text-white/70">
-                    <li>Guarulhos, SP</li>
-                    <li><a href="https://wa.me/5511919730067" target="_blank" class="hover:text-[#a020f0]">+55 11 91973-0067</a></li>
-                    <li><a href="mailto:vtimportspb@gmail.com" class="hover:text-[#a020f0]">vtimportspb@gmail.com</a></li>
-                    <li><a href="https://www.instagram.com/con.exaostreet01" target="_blank" class="hover:text-[#a020f0]">@con.exaostreet01</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold mb-5">Atendimento</h3>
-                <p class="text-white/70 leading-relaxed">
-                    Suporte para lojistas e clientes finais com resposta humana e acompanhamento.
-                </p>
-            </div>
-        </div>
-
-        <div class="border-t border-white/10">
-            <div class="max-w-screen-2xl mx-auto px-5 md:px-8 py-6 flex flex-col md:flex-row justify-between gap-4 text-sm text-white/50">
-                <span>© 2026 Conexão Street • Todos os direitos reservados.</span>
-                <span>Desenvolvido para uma experiência premium.</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- DRAWER DO CARRINHO -->
-    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#0a0a0a] border-l border-white/10 z-[60] translate-x-full transition-transform duration-300 shadow-2xl shadow-black/70 flex flex-col">
-        <div class="flex items-center justify-between px-6 py-5 border-b border-white/10">
-            <h3 class="text-2xl font-semibold">Seu carrinho</h3>
-            <button onclick="toggleCart()" class="text-2xl text-white/70 hover:text-white">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <div id="cart-items" class="p-6 space-y-4 text-white/70 flex-1 overflow-y-auto">
-            <p>Seu carrinho está vazio.</p>
-        </div>
-
-        <div class="border-t border-white/10 p-6">
-            <div class="flex items-center justify-between mb-5">
-                <span class="text-white/70">Total</span>
-                <strong id="cart-total" class="text-2xl">R$ 0,00</strong>
-            </div>
-            <a href="produtos.html" class="block w-full text-center bg-[#a020f0] hover:bg-[#c04cff] py-4 rounded-2xl font-semibold">
-                Ir para loja
-            </a>
-        </div>
-    </aside>
-
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/70 z-50 hidden"></div>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 900,
-            once: true,
-            offset: 80
-        });
-
-        const featuredProducts = [
-            {
-                id: 1,
-                name: "Moletom Premium CxSt",
-                price: 189.90,
-                image: "https://picsum.photos/id/1011/600/700",
-                tag: "Streetwear"
-            },
-            {
-                id: 2,
-                name: "Calça Cargo Black",
-                price: 159.90,
-                image: "https://picsum.photos/id/1005/600/700",
-                tag: "Utility"
-            },
-            {
-                id: 3,
-                name: "Camiseta Sportlife",
-                price: 79.90,
-                image: "https://picsum.photos/id/1001/600/700",
-                tag: "Sportlife"
-            },
-            {
-                id: 4,
-                name: "Jaqueta Urban Drop",
-                price: 229.90,
-                image: "https://picsum.photos/id/1018/600/700",
-                tag: "Premium"
-            },
-            {
-                id: 5,
-                name: "Conjunto Grafite",
-                price: 249.90,
-                image: "https://picsum.photos/id/1025/600/700",
-                tag: "Grafite"
-            }
-        ];
-
-        let cart = [];
-
-        function formatPrice(value) {
-            return value.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            });
-        }
-
-        function renderFeaturedProducts() {
-            const grid = document.getElementById('featured-grid');
-            if (!grid) return;
-
-            grid.innerHTML = featuredProducts.map(product => `
-                <article class="group bg-white/5 border border-white/10 rounded-3xl overflow-hidden card-hover">
-                    <div class="relative overflow-hidden">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500">
-                        <span class="absolute top-4 left-4 bg-[#a020f0] text-white text-xs font-semibold px-3 py-2 rounded-full">${product.tag}</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-semibold leading-tight min-h-[56px]">${product.name}</h3>
-                        <div class="mt-4 flex items-center justify-between gap-3">
-                            <span class="product-price text-xl font-bold text-[#a020f0]">${formatPrice(product.price)}</span>
-                            <button onclick="addToCart(${product.id})" class="bg-white text-black hover:bg-[#a020f0] hover:text-white px-4 py-2 rounded-2xl text-sm font-semibold">
-                                Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
-        }
-
-        function addToCart(productId) {
-            const product = featuredProducts.find(item => item.id === productId);
-            if (!product) return;
-
-            cart.push(product);
-            updateCartUI();
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const count = document.getElementById('cart-count');
-            const items = document.getElementById('cart-items');
-            const total = document.getElementById('cart-total');
-
-            if (count) count.textContent = cart.length;
-
-            if (items) {
-                if (!cart.length) {
-                    items.innerHTML = '<p>Seu carrinho está vazio.</p>';
-                } else {
-                    items.innerHTML = cart.map((item, index) => `
-                        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex gap-4">
-                            <img src="${item.image}" alt="${item.name}" class="w-20 h-24 rounded-2xl object-cover">
-                            <div class="flex-1">
-                                <h4 class="font-semibold">${item.name}</h4>
-                                <p class="text-[#a020f0] mt-2 font-bold">${formatPrice(item.price)}</p>
-                                <button onclick="removeFromCart(${index})" class="mt-3 text-sm text-red-400 hover:text-red-300">
-                                    Remover
-                                </button>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
-
-            const totalValue = cart.reduce((sum, item) => sum + item.price, 0);
-            if (total) total.textContent = formatPrice(totalValue);
-        }
-
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-overlay');
-            if (!drawer || !overlay) return;
-
-            const isOpen = drawer.classList.contains('translate-x-0');
-
-            drawer.classList.toggle('translate-x-0', !isOpen);
-            drawer.classList.toggle('translate-x-full', isOpen);
-            overlay.classList.toggle('hidden', isOpen);
-            document.body.classList.toggle('overflow-hidden', !isOpen);
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('hamburger-icon');
-            if (!menu || !icon) return;
-
-            menu.classList.toggle('hidden');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
-        }
-
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (!navbar) return;
-
-            if (window.scrollY > 20) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderFeaturedProducts();
-            updateCartUI();
-        });
-    </script>
-</body>
-</html>
+function realtime(){if(st.channel)supabase.removeChannel(st.channel);let debounce;const reload=()=>{clearTimeout(debounce);debounce=setTimeout(load,700)};st.channel=supabase.channel("executador-panel").on("postgres_changes",{event:"*",schema:"public",table:"devices"},reload).on("postgres_changes",{event:"*",schema:"public",table:"findings"},reload).on("postgres_changes",{event:"*",schema:"public",table:"scan_runs"},reload).on("postgres_changes",{event:"*",schema:"public",table:"repair_jobs"},reload).subscribe()}
+supabase.auth.onAuthStateChange((_event,s)=>{if(!s){$("#auth").classList.remove("hide");$("#app").classList.add("hide")}});
+start();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
