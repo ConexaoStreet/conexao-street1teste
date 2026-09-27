@@ -1,0 +1,40 @@
+name: Validate Windows Agent
+
+on:
+  push:
+    paths:
+      - "agent/ExecutadorAgent.ps1"
+      - ".github/workflows/windows-agent-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse PowerShell
+        shell: powershell
+        run: |
+          $tokens = $null
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path "agent/ExecutadorAgent.ps1"),
+            [ref]$tokens,
+            [ref]$errors
+          ) | Out-Null
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
+          Write-Host "PARSER_OK"
+
+      - name: Run Windows inventory self-test
+        shell: powershell
+        run: |
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass -File "agent/ExecutadorAgent.ps1" -SelfTest
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
