@@ -4,211 +4,80 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07110e">
-<meta name="description" content="Executador — diagnóstico e reparo remoto de PC pelo celular.">
+<meta name="description" content="Executador — diagnóstico e reparo local do Windows.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg">
-<title>Executador — PC Health & Repair</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<title>Executador — PC direto</title>
 <style>
-:root{--bg:#050908;--card:#0b1512;--line:#183128;--txt:#eefaf5;--mut:#8ba198;--green:#4ff7ad;--cyan:#31c7ff;--amber:#ffb454;--red:#ff6577;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#0e251c,transparent 34%),radial-gradient(circle at 100% 22%,#071c27,transparent 28%),var(--bg);color:var(--txt);min-height:100vh}button,input{font:inherit}.hide{display:none!important}.glass{background:#0b1512e8;border:1px solid #8cffd21c;box-shadow:0 24px 70px #0007;backdrop-filter:blur(16px)}.btn{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#09110f;color:var(--txt);font-weight:750;cursor:pointer}.btn:hover{border-color:#4ff7ad66}.primary{background:linear-gradient(135deg,var(--green),#2bdc91);color:#03100b;border:0}.auth{min-height:100vh;display:grid;place-items:center;padding:22px}.login{width:min(460px,100%);padding:30px;border-radius:24px}.brand{display:flex;align-items:center;gap:11px;font-weight:900}.logo{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),var(--cyan));color:#04110c;font-size:22px}.brand small{display:block;color:var(--mut);font-weight:500}.login h1{font-size:34px;line-height:1.05;margin:30px 0 10px}.muted{color:var(--mut)}.form{display:grid;gap:12px;margin-top:22px}.form label{display:grid;gap:6px;font-size:13px;color:#b8cac4}.form input,.search{border:1px solid var(--line);background:#06100d;color:var(--txt);padding:12px;border-radius:11px;outline:none}.msg{min-height:20px;color:var(--mut);font-size:13px}.shell{display:grid;grid-template-columns:226px 1fr;gap:14px;padding:14px}.side{height:calc(100vh - 28px);position:sticky;top:14px;border-radius:20px;padding:18px;display:flex;flex-direction:column}.nav{display:grid;gap:6px;margin-top:30px}.nav button{border:0;background:transparent;color:#86a096;text-align:left;padding:11px;border-radius:10px;cursor:pointer}.nav button.on,.nav button:hover{background:#4ff7ad12;color:var(--txt)}.bottom{margin-top:auto}.main{min-width:0;padding:4px 8px 80px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:8px 0 18px}.top h2{margin:0}.ey{font-size:10px;letter-spacing:.17em;color:#6f9184;font-weight:900;margin:0 0 5px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.view{display:none}.view.on{display:block}.hero{border-radius:22px;padding:28px;display:flex;justify-content:space-between;align-items:center;min-height:220px}.hero h3{font-size:29px;margin:0 0 8px}.hero p{color:var(--mut);max-width:650px}.score{width:135px;height:135px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#07100d 55%,transparent 57%),conic-gradient(var(--green) var(--s,0%),#ffffff12 0);font-size:33px;font-weight:900}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}.stat,.panel{border-radius:16px;padding:17px}.stat small{display:block;color:var(--mut)}.stat b{font-size:27px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.head h3{margin:0}.list{display:grid;gap:8px}.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid #ffffff0d;border-radius:12px;background:#ffffff05}.item strong,.item small{display:block}.item small{color:var(--mut);margin-top:3px}.badge{font-size:10px;font-weight:850;padding:5px 8px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}.online,.completed,.succeeded{color:var(--green);border-color:#4ff7ad44}.medium,.warning,.queued,.running,.leased{color:var(--amber);border-color:#ffb45444}.high,.critical,.fail,.failed{color:var(--red);border-color:#ff657744}.devices{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}.device{padding:16px;border:1px solid var(--line);border-radius:15px;cursor:pointer;background:#ffffff04}.device.sel{border-color:#4ff7ad66;background:#4ff7ad0a}.device h4{margin:12px 0 4px}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.act{padding:20px;border-radius:16px}.act h3{margin:10px 0 6px}.act p{color:var(--mut);min-height:54px}.softrow{display:grid;grid-template-columns:1.5fr .8fr .7fr;gap:10px;padding:11px;border-bottom:1px solid #ffffff0b}.softrow small{color:var(--mut)}.empty{text-align:center;padding:24px;color:var(--mut);border:1px dashed var(--line);border-radius:12px}.modal{width:min(430px,calc(100% - 20px));border-radius:20px;padding:24px;color:var(--txt)}.modal::backdrop{background:#000b;backdrop-filter:blur(6px)}.code{text-align:center;font:900 29px ui-monospace,monospace;letter-spacing:.15em;color:var(--green);background:#06100c;border:1px solid #4ff7ad44;border-radius:13px;padding:16px;margin:16px 0}.qr{display:grid;place-items:center;background:#fff;border-radius:10px;width:max-content;margin:14px auto;padding:8px}.toast{position:fixed;right:18px;bottom:18px;z-index:30;background:#10201a;border:1px solid #4ff7ad44;border-radius:11px;padding:11px 14px}.mobile{display:none}@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.grid2,.actions{grid-template-columns:1fr}.shell{grid-template-columns:190px 1fr}.side{padding:13px}.score{opacity:.35}}@media(max-width:680px){.shell{display:block;padding:0}.side{display:none}.main{padding:14px 11px 92px}.top{padding-top:5px}.cloud{display:none}.hero{padding:21px;display:block;position:relative;overflow:hidden}.hero h3{font-size:24px}.score{position:absolute;right:-15px;top:-15px}.softrow{grid-template-columns:1.5fr .7fr}.softrow>:nth-child(2){display:none}.mobile{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:9px;right:9px;bottom:9px;z-index:20;border-radius:16px;padding:6px}.mobile button{border:0;background:transparent;color:#789087;padding:8px;border-radius:10px}.mobile button.on{color:var(--green);background:#4ff7ad12}.toast{left:11px;right:11px;bottom:78px}}
+:root{--bg:#050908;--card:#0b1512;--line:#183128;--txt:#eefaf5;--mut:#8ba198;--green:#4ff7ad;--cyan:#31c7ff;--red:#ff6577;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#0d281f 0,#07110e 34%,#050908 72%);color:var(--txt)}
+.wrap{width:min(1040px,calc(100% - 32px));margin:auto;padding:34px 0 70px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 0 34px}
+.brand{font-weight:900;letter-spacing:.13em;font-size:18px;color:var(--green)}
+.badge{border:1px solid #235944;background:#0b2119;color:var(--green);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.hero{border:1px solid var(--line);background:linear-gradient(145deg,#0b1713e8,#07100ee8);border-radius:28px;padding:52px;box-shadow:0 30px 90px #0008;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:#4ff7ad10;filter:blur(10px);right:-120px;top:-170px}
+.ey{font-size:12px;font-weight:900;letter-spacing:.16em;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,74px);line-height:.98;margin:14px 0 18px;letter-spacing:-.04em;max-width:820px}
+.lead{font-size:clamp(17px,2vw,21px);line-height:1.55;color:#b7c8c1;max-width:760px;margin:0 0 30px}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;background:var(--green);color:#03100b;font-weight:950;padding:17px 24px;border-radius:14px;box-shadow:0 12px 36px #4ff7ad24;transition:.18s transform,.18s filter}
+.cta:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.note{margin-top:14px;color:var(--mut);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:24px}
+.card{border:1px solid var(--line);background:#09120f;border-radius:18px;padding:20px;min-height:132px}
+.card b{display:block;color:var(--green);margin-bottom:8px}
+.card span{color:var(--mut);font-size:14px;line-height:1.45}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+.step{border:1px solid var(--line);border-radius:18px;background:#08110e;padding:22px}
+.num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#12392a;color:var(--green);font-weight:900;margin-bottom:14px}
+.step h3{margin:0 0 8px;font-size:17px}.step p{margin:0;color:var(--mut);line-height:1.5;font-size:14px}
+.safe{margin-top:28px;padding:18px 20px;border:1px solid #244f40;border-radius:16px;background:#0a1712;color:#b9d5c9;line-height:1.55}
+.safe b{color:var(--green)}
+.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#60766d;font-size:12px;margin-top:26px;padding:0 4px}
+@media(max-width:800px){.hero{padding:34px 24px}.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.top{padding-bottom:24px}}
+@media(max-width:480px){.wrap{width:min(100% - 20px,1040px)}.grid{grid-template-columns:1fr}.cta{width:100%}}
 </style>
 </head>
 <body>
-<section id="auth" class="auth">
-  <div class="login glass">
-    <div class="brand"><span class="logo">E</span><div>Executador<small>PC Health & Repair</small></div></div>
-    <h1>Seu PC no controle do celular.</h1>
-    <p class="muted">Diagnóstico, aplicativos corrompidos e reparos autorizados em tempo real.</p>
-    <form id="form" class="form">
-      <label>E-mail<input id="email" type="email" required autocomplete="email"></label>
-      <label>Senha<input id="pass" type="password" minlength="6" required autocomplete="current-password"></label>
-      <button id="submit" class="btn primary">Entrar</button>
-    </form>
-    <div class="row" style="margin-top:8px">
-      <button id="toggle" class="btn" style="flex:1">Criar conta</button>
-      <button id="forgot" class="btn" style="flex:1">Esqueci minha senha</button>
+<main class="wrap">
+  <header class="top">
+    <div class="brand">EXECUTADOR</div>
+    <div class="badge">PC DIRETO</div>
+  </header>
+
+  <section class="hero">
+    <div class="ey">Windows • execução local</div>
+    <h1>Diagnóstico e reparo direto no seu PC.</h1>
+    <p class="lead">Sem celular, sem login, sem código e sem pareamento. Baixe um único arquivo, autorize o Administrador e o painel do Executador abre no próprio Windows.</p>
+
+    <a class="cta" href="./agent/Executador-PC.cmd?v=0401" download="Executador-PC.cmd">↓ Baixar Executador para PC</a>
+    <div class="note">Arquivo autossuficiente: o motor e a interface local já estão incluídos.</div>
+
+    <div class="grid">
+      <div class="card"><b>Visão geral</b><span>Windows, hardware, RAM, discos, rede e recursos do sistema.</span></div>
+      <div class="card"><b>Diagnóstico</b><span>CPU, memória, armazenamento, rede, segurança, drivers e integridade do Windows.</span></div>
+      <div class="card"><b>Aplicativos</b><span>Lista os programas instalados e oferece reparo quando há um método seguro disponível.</span></div>
+      <div class="card"><b>Reparos</b><span>DNS, rede, Explorer, DISM/SFC, Store, Defender, Firewall, WinGet e mais.</span></div>
+      <div class="card"><b>Logs</b><span>Histórico local das operações executadas pelo Executador.</span></div>
     </div>
-    <div id="recoveryBox" class="hide" style="margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px">
-      <strong>Definir nova senha</strong>
-      <div class="form" style="margin-top:10px">
-        <label>Nova senha<input id="newPass" type="password" minlength="8" autocomplete="new-password"></label>
-        <button id="savePass" class="btn primary" type="button">Salvar nova senha</button>
-      </div>
-    </div>
-    <p id="msg" class="msg"></p>
-  </div>
-</section>
+  </section>
 
-<div id="app" class="shell hide">
-  <aside class="side glass">
-    <div class="brand"><span class="logo">E</span><div>Executador<small>Control Center</small></div></div>
-    <nav class="nav">
-      <button class="on" data-view="home">◈ Visão geral</button>
-      <button data-view="pcs">▣ Dispositivos</button>
-      <button data-view="scan">⌁ Diagnósticos</button>
-      <button data-view="issues">! Problemas</button>
-      <button data-view="apps">▦ Aplicativos</button>
-      <button data-view="fixes">↻ Reparos</button>
-    </nav>
-    <div class="bottom"><button id="logout" class="btn" style="width:100%">Sair</button></div>
-  </aside>
+  <section class="steps">
+    <div class="step"><div class="num">1</div><h3>Baixe</h3><p>Clique em <b>Baixar Executador para PC</b>. Não é necessário instalar aplicativo no celular.</p></div>
+    <div class="step"><div class="num">2</div><h3>Execute</h3><p>Abra <b>Executador-PC.cmd</b> e aceite a solicitação de Administrador do Windows.</p></div>
+    <div class="step"><div class="num">3</div><h3>Use localmente</h3><p>O painel gráfico abre no próprio PC com diagnóstico, aplicativos, reparos e logs.</p></div>
+  </section>
 
-  <main class="main">
-    <header class="top">
-      <div><p class="ey">CENTRAL DE MANUTENÇÃO</p><h2 id="title">Visão geral</h2></div>
-      <div class="row"><span id="roleBadge" class="badge">USER</span><span class="badge online cloud">● Nuvem conectada</span><button class="btn primary" data-pair>+ Conectar PC</button></div>
-    </header>
+  <div class="safe"><b>Controle local:</b> não existe campo para executar CMD/PowerShell arbitrário. Os reparos disponíveis são rotinas pré-definidas e as ações sensíveis pedem confirmação antes de executar.</div>
 
-    <section id="view-home" class="view on">
-      <div class="hero glass">
-        <div>
-          <p class="ey">STATUS GERAL</p>
-          <h3 id="heroTitle">Conecte seu primeiro computador</h3>
-          <p id="heroSub">No PC, abra o botão de conexão; ele gera o código que você cola aqui no celular.</p>
-          <div class="row"><button id="quick" class="btn primary">Diagnóstico rápido</button><button id="deep" class="btn">Windows profundo</button></div>
-        </div>
-        <div id="score" class="score">--</div>
-      </div>
-      <div class="stats">
-        <div class="stat glass"><small>Dispositivos</small><b id="nDev">0</b></div>
-        <div class="stat glass"><small>Problemas</small><b id="nIssue">0</b></div>
-        <div class="stat glass"><small>Reparos pendentes</small><b id="nFix">0</b></div>
-        <div class="stat glass"><small>Aplicativos</small><b id="nApp">0</b></div>
-      </div>
-      <div class="grid2">
-        <div class="panel glass"><div class="head"><h3>Seus PCs</h3></div><div id="homePcs" class="list"></div></div>
-        <div class="panel glass"><div class="head"><h3>Prioridades</h3></div><div id="homeIssues" class="list"></div></div>
-      </div>
-    </section>
-
-    <section id="view-pcs" class="view"><div class="panel glass"><div class="head"><h3>Dispositivos pareados</h3><button class="btn primary" data-pair>+ Conectar PC</button></div><div id="pcs" class="devices"></div></div></section>
-
-    <section id="view-scan" class="view">
-      <div class="actions">
-        <div class="act glass"><b>⚡</b><h3>Verificação rápida</h3><p>CPU, RAM, armazenamento, rede, segurança e aplicativos.</p><button class="btn primary" data-scan="quick">Iniciar</button></div>
-        <div class="act glass"><b>◉</b><h3>Windows profundo</h3><p>MSI/MSIX, runtimes, Component Store, drivers, serviços e eventos.</p><button class="btn" data-scan="windows_deep">Iniciar</button></div>
-        <div class="act glass"><b>✓</b><h3>Corrigir seguros</h3><p>Enfileira somente ações de baixo risco e sem privilégio administrativo.</p><button id="safe" class="btn">Executar</button></div>
-      </div>
-      <div class="panel glass" style="margin-top:10px"><div class="head"><h3>Histórico</h3></div><div id="scans" class="list"></div></div>
-    </section>
-
-    <section id="view-issues" class="view"><div class="panel glass"><div class="head"><h3>Problemas encontrados</h3></div><div id="issues" class="list"></div></div></section>
-
-    <section id="view-apps" class="view"><div class="panel glass"><div class="head"><h3>Aplicativos instalados</h3><div class="row"><input id="findApp" class="search" placeholder="Buscar aplicativo"><button id="updateApps" class="btn">Atualizar apps</button></div></div><div id="appsList"></div></div></section>
-
-    <section id="view-fixes" class="view"><div class="panel glass"><div class="head"><h3>Fila e histórico de reparos</h3></div><div id="fixes" class="list"></div></div></section>
-  </main>
-
-  <nav class="mobile glass">
-    <button class="on" data-view="home">◈<small>Início</small></button>
-    <button data-view="pcs">▣<small>PCs</small></button>
-    <button data-view="issues">!<small>Problemas</small></button>
-    <button data-view="fixes">↻<small>Reparos</small></button>
-  </nav>
-</div>
-
-<dialog id="pair" class="modal glass">
-  <div class="head"><h3>Conectar computador</h3><button id="close" class="btn">×</button></div>
-  <p class="muted"><b>1.</b> No PC, execute o pareador. O Agent 0.3.1 já vem dentro do arquivo, sem baixar nada do GitHub.</p>
-  <div class="row" style="margin:12px 0">
-    <a id="downloadPairCmd" class="btn primary" href="./agent/Parear-Executador.cmd?v=0321" download="Parear-Executador.cmd">Baixar botão do PC</a>
-    <a id="downloadStartCmd" class="btn" href="./agent/Start-Executador.cmd?v=0321" download="Start-Executador.cmd">Baixar Iniciar Agent</a>
-  </div>
-  <p class="muted"><b>2.</b> Cole aqui o código que apareceu no PC:</p>
-  <input id="pcCode" class="search" inputmode="text" autocomplete="one-time-code" maxlength="12" placeholder="Ex.: AB12CD34" style="width:100%;font:900 24px ui-monospace,monospace;letter-spacing:.15em;text-align:center;text-transform:uppercase;padding:16px">
-  <button id="claimPc" class="btn primary" style="width:100%;margin-top:10px">Vincular este PC</button>
-  <p id="pairState" class="muted" style="margin-top:12px">O código é gerado no computador e dura 15 minutos.</p>
-  <p class="muted" style="font-size:12px">Depois de vincular uma vez, use <b>Start-Executador.cmd</b>. Os dois arquivos já incluem o Agent, validam SHA-256 e solicitam Administrador automaticamente.</p><p class="ey" style="margin-top:12px">BUILD 2026.09.27-8</p>
-</dialog>
-<div id="toast" class="toast hide"></div>
-
-<script type="module">
-import {createClient} from "https://esm.sh/@supabase/supabase-js@2.95.0";
-const SUPABASE_URL="https://skzyxapvleyktmgshvfp.supabase.co";
-const KEY="sb_publishable_6ah677Fpu1_PO7uamBBZYA_gfNqmOWo";
-const API=SUPABASE_URL+"/functions/v1/agent-api";
-const supabase=createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const st={devices:[],issues:[],scans:[],fixes:[],actions:[],apps:[],selected:null,channel:null,timer:null,mode:"login",role:"user"};
-const titles={home:"Visão geral",pcs:"Dispositivos",scan:"Diagnósticos",issues:"Problemas",apps:"Aplicativos",fixes:"Reparos"};
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-const empty=t=>'<div class="empty">'+esc(t)+'</div>';
-const label=s=>({online:"Online",offline:"Offline",degraded:"Degradado",queued:"Na fila",leased:"Preparando",running:"Executando",completed:"Concluído",succeeded:"Concluído",failed:"Falhou",warning:"Atenção",critical:"Crítico",high:"Alto",medium:"Médio"}[s]||s||"—");
-const badge=(t,c)=>'<span class="badge '+esc(c||"")+'">'+esc(t)+'</span>';
-const ago=d=>{if(!d)return"nunca";const n=Math.max(0,Date.now()-new Date(d).getTime()),m=Math.floor(n/60000);if(m<1)return"agora";if(m<60)return"há "+m+" min";const h=Math.floor(m/60);if(h<24)return"há "+h+" h";return"há "+Math.floor(h/24)+" d"};
-function toast(t){const e=$("#toast");e.textContent=t;e.classList.remove("hide");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.add("hide"),2800)}
-async function session(){return (await supabase.auth.getSession()).data.session}
-async function api(path,opt={}){const s=await session();if(!s)throw new Error("Sessão expirada");const r=await fetch(API+path,{...opt,headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+s.access_token,...(opt.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||d.details||"Erro na API");return d}
-function view(v){$$(".view").forEach(x=>x.classList.toggle("on",x.id==="view-"+v));$$("[data-view]").forEach(x=>x.classList.toggle("on",x.dataset.view===v));$("#title").textContent=titles[v]||"Executador"}
-$$("[data-view]").forEach(x=>x.onclick=()=>view(x.dataset.view));
-
-$("#toggle").onclick=()=>{st.mode=st.mode==="login"?"signup":"login";$("#submit").textContent=st.mode==="login"?"Entrar":"Criar conta";$("#toggle").textContent=st.mode==="login"?"Criar conta":"Já tenho conta";$("#msg").textContent=""};
-
-$("#forgot").onclick=async()=>{const email=$("#email").value.trim();if(!email)return $("#msg").textContent="Digite seu e-mail primeiro.";$("#forgot").disabled=true;try{const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;$("#msg").textContent="Enviei o link de recuperação para seu e-mail."}catch(e){$("#msg").textContent=e.message||String(e)}finally{$("#forgot").disabled=false}};
-
-$("#savePass").onclick=async()=>{const password=$("#newPass").value;if(password.length<8)return $("#msg").textContent="Use pelo menos 8 caracteres.";$("#savePass").disabled=true;try{const {error}=await supabase.auth.updateUser({password});if(error)throw error;$("#msg").textContent="Senha alterada. Você já pode entrar.";$("#recoveryBox").classList.add("hide");await supabase.auth.signOut()}catch(e){$("#msg").textContent=e.message||String(e)}finally{$("#savePass").disabled=false}};
-$("#form").onsubmit=async e=>{e.preventDefault();$("#submit").disabled=true;$("#msg").textContent="";try{let res=st.mode==="login"?await supabase.auth.signInWithPassword({email:$("#email").value,password:$("#pass").value}):await supabase.auth.signUp({email:$("#email").value,password:$("#pass").value});if(res.error)throw res.error;if(st.mode==="signup"&&!res.data.session)$("#msg").textContent="Conta criada. Confirme o e-mail e depois entre.";else await start()}catch(err){$("#msg").textContent=err.message||String(err)}finally{$("#submit").disabled=false}};
-$("#logout").onclick=async()=>{await supabase.auth.signOut();location.reload()};
-
-async function start(){const s=await session();$("#auth").classList.toggle("hide",!!s);$("#app").classList.toggle("hide",!s);if(!s)return;await load();realtime()}
-async function load(){
- const r=await Promise.all([
-  supabase.from("device_health_overview").select("*").order("last_seen_at",{ascending:false,nullsFirst:false}),
-  supabase.from("findings").select("*").in("state",["open","in_progress","recurring"]).order("last_seen_at",{ascending:false}).limit(100),
-  supabase.from("scan_runs").select("*").order("created_at",{ascending:false}).limit(30),
-  supabase.from("repair_jobs").select("*,repair_actions(action_key,name,risk_level,requires_admin,requires_reboot)").order("queued_at",{ascending:false}).limit(50),
-  supabase.from("repair_actions").select("*").eq("enabled",true),
-  supabase.from("user_roles").select("role").maybeSingle()
- ]);
- st.devices=r[0].data||[];st.issues=r[1].data||[];st.scans=r[2].data||[];st.fixes=r[3].data||[];st.actions=r[4].data||[];st.role=r[5]?.data?.role||"user";
- if(!st.selected||!st.devices.some(x=>x.device_id===st.selected))st.selected=st.devices[0]?.device_id||null;
- st.apps=[];
- if(st.selected){const a=await supabase.from("software_inventory").select("*").eq("device_id",st.selected).eq("is_present",true).order("name").limit(700);st.apps=a.data||[]}
- render()
-}
-const action=k=>st.actions.find(x=>x.action_key===k);
-function devItem(x){return'<div class="item"><div><strong>'+esc(x.display_name)+'</strong><small>'+esc(x.platform)+' '+esc(x.platform_version||"")+' • '+ago(x.last_seen_at)+'</small></div>'+badge(label(x.status),x.status)+'</div>'}
-function issueItem(x){const a=action(x.recommended_action_key);return'<div class="item"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.summary||x.category)+'</small></div><div class="row">'+badge(String(x.severity||"medium").toUpperCase(),x.severity)+(a?'<button class="btn" data-fix="'+x.id+'" data-action="'+esc(a.action_key)+'">Reparar</button>':"")+'</div></div>'}
-function render(){const rb=$("#roleBadge");if(rb){rb.textContent=st.role==="super_admin"?"SUPER ADMIN":st.role.toUpperCase();rb.className="badge "+(st.role==="super_admin"?"online":"");}
- const s=st.devices.find(x=>x.device_id===st.selected);
- $("#nDev").textContent=st.devices.length;$("#nIssue").textContent=st.issues.length;$("#nFix").textContent=st.fixes.filter(x=>["queued","leased","running"].includes(x.status)).length;$("#nApp").textContent=st.apps.length;
- $("#heroTitle").textContent=s?s.display_name:"Conecte seu primeiro computador";
- $("#heroSub").textContent=s?"Windows "+(s.platform_version||"")+" • "+label(s.status)+" • "+ago(s.last_seen_at):"Instale o agente do Windows e faça o pareamento pelo código.";
- $("#score").textContent=s?.health_score==null?"--":Math.round(s.health_score)+"%";$("#score").style.setProperty("--s",(s?.health_score||0)+"%");
- $("#homePcs").innerHTML=st.devices.length?st.devices.slice(0,4).map(devItem).join(""):empty("Nenhum PC conectado.");
- $("#homeIssues").innerHTML=st.issues.length?st.issues.slice(0,4).map(issueItem).join(""):empty("Nenhum problema aberto.");
- $("#pcs").innerHTML=st.devices.length?st.devices.map(x=>'<article class="device '+(x.device_id===st.selected?"sel":"")+'" data-pc="'+x.device_id+'"><div class="row" style="justify-content:space-between"><b>▣</b>'+badge(label(x.status),x.status)+'</div><h4>'+esc(x.display_name)+'</h4><small class="muted">'+esc(x.platform_version||"Windows")+' • '+ago(x.last_seen_at)+'</small></article>').join(""):empty("Nenhum PC pareado.");
- $$("[data-pc]").forEach(x=>x.onclick=async()=>{st.selected=x.dataset.pc;await load();toast("PC selecionado")});
- $("#scans").innerHTML=st.scans.length?st.scans.map(x=>'<div class="item"><div><strong>'+esc(x.template_key)+'</strong><small>'+new Date(x.created_at).toLocaleString("pt-BR")+'</small></div>'+badge(label(x.status),x.status)+'</div>').join(""):empty("Nenhum diagnóstico ainda.");
- $("#issues").innerHTML=st.issues.length?st.issues.map(issueItem).join(""):empty("Nenhum problema aberto.");
- $$("[data-fix]").forEach(x=>x.onclick=()=>repair(x.dataset.fix,x.dataset.action));
- $("#fixes").innerHTML=st.fixes.length?st.fixes.map(x=>'<div class="item"><div><strong>'+esc(x.repair_actions?.name||"Reparo")+'</strong><small>'+new Date(x.queued_at).toLocaleString("pt-BR")+'</small></div>'+badge(label(x.status),x.status)+'</div>').join(""):empty("Nenhum reparo solicitado.");
- renderApps()
-}
-function renderApps(){const q=($("#findApp").value||"").toLowerCase();const a=st.apps.filter(x=>!q||(x.name+" "+(x.publisher||"")).toLowerCase().includes(q));$("#appsList").innerHTML=a.length?a.map(x=>{const i=st.apps.indexOf(x);const canMsi=x.package_type==="msi"&&x.identity_key?.startsWith("msi:");const canAppx=x.package_type==="appx"&&x.metadata?.package_family_name;const repair=canMsi?'<button class="btn" data-appfix="'+i+'" data-kind="msi">Reparar</button>':canAppx?'<button class="btn" data-appfix="'+i+'" data-kind="appx">Reparar</button>':"";return '<div class="softrow"><div><strong>'+esc(x.name)+'</strong><small>'+esc(x.publisher||"Publicador desconhecido")+'</small></div><div><small>'+esc(x.version||"—")+'</small></div><div class="row">'+badge(x.update_available?"Atualização":"Instalado",x.update_available?"medium":"completed")+repair+'</div></div>'}).join(""):empty(st.selected?"Nenhum aplicativo encontrado.":"Selecione um PC.");$("[data-appfix]").forEach(b=>b.onclick=()=>repairInstalledApp(Number(b.dataset.appfix),b.dataset.kind))}
-$("#findApp").oninput=renderApps;
-
-async function repairInstalledApp(i,kind){const x=st.apps[i];if(!x||!st.selected)return;const actionKey=kind==="appx"?"windows.reregister_store_app":"software.repair_app";const params=kind==="appx"?{package_family_name:x.metadata?.package_family_name}:{identity_key:x.identity_key,name:x.name};if(!confirm("Reparar “"+x.name+"”? O Executador usará somente o mecanismo conhecido para este tipo de pacote."))return;try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:actionKey,parameters:params,idempotency_key:"app:"+x.identity_key+":"+Date.now()})});toast("Reparo enviado ao PC");await load();view("fixes")}catch(e){toast(e.message)}}
-
-$("#updateApps").onclick=async()=>{if(!st.selected)return toast("Selecione um PC");if(!confirm("Atualizar aplicativos suportados pelo Windows Package Manager?"))return;try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:"software.update_apps",parameters:{},idempotency_key:"update-apps:"+Date.now()})});toast("Atualização adicionada à fila");await load();view("fixes")}catch(e){toast(e.message)}};
-
-async function scan(template){if(!st.selected)return toast("Conecte ou selecione um PC");try{await api("/scan/start",{method:"POST",body:JSON.stringify({device_id:st.selected,template_key:template,client_context:{requested_from:"panel"}})});toast("Diagnóstico enviado ao PC");await load();view("scan")}catch(e){toast(e.message)}}
-$("#quick").onclick=()=>scan("quick");$("#deep").onclick=()=>scan("windows_deep");$$("[data-scan]").forEach(x=>x.onclick=()=>scan(x.dataset.scan));
-
-async function repair(id,key){const a=action(key);if(!a||!st.selected)return;if(!confirm("Executar “"+a.name+"” neste PC?"+(a.requires_reboot?" Pode exigir reinicialização.":"")))return;try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:key,finding_id:id,idempotency_key:id+":"+key})});toast("Reparo colocado na fila");await load();view("fixes")}catch(e){toast(e.message)}}
-$("#safe").onclick=async()=>{const q=st.issues.map(f=>({f,a:action(f.recommended_action_key)})).filter(x=>x.a&&x.a.risk_level==="low"&&!x.a.requires_admin);if(!q.length)return toast("Sem correções automáticas de baixo risco");if(!confirm("Executar "+q.length+" correção(ões) segura(s)?"))return;for(const x of q){try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:x.a.action_key,finding_id:x.f.id,idempotency_key:x.f.id+":"+x.a.action_key})})}catch{}}toast("Correções adicionadas à fila");load()};
-
-const dlg=$("#pair");
-function pair(){dlg.showModal();$("#pcCode").value="";$("#pairState").textContent="Abra o botão do PC para gerar o código.";setTimeout(()=>$("#pcCode").focus(),120)}
-$("#claimPc").onclick=async()=>{const code=$("#pcCode").value.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");if(code.length<6)return $("#pairState").textContent="Digite o código mostrado no computador.";$("#claimPc").disabled=true;$("#pairState").textContent="Vinculando...";try{const d=await api("/pairing/claim-pc",{method:"POST",body:JSON.stringify({code})});$("#pairState").textContent="PC conectado com sucesso!";toast((d.display_name||"PC")+" vinculado");await load();setTimeout(()=>dlg.close(),700)}catch(e){const m=String(e.message||e);$("#pairState").textContent=m.includes("expired_code")?"Código expirado. Gere outro no PC.":m.includes("invalid_or_used_code")?"Código inválido ou já utilizado.":m}finally{$("#claimPc").disabled=false}};
-$("#pcCode").oninput=e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"");
-$("#pcCode").onkeydown=e=>{if(e.key==="Enter")$("#claimPc").click()};
-$$("[data-pair]").forEach(x=>x.onclick=pair);$("#close").onclick=()=>dlg.close();
-
-function realtime(){if(st.channel)supabase.removeChannel(st.channel);let debounce;const reload=()=>{clearTimeout(debounce);debounce=setTimeout(load,700)};st.channel=supabase.channel("executador-panel").on("postgres_changes",{event:"*",schema:"public",table:"devices"},reload).on("postgres_changes",{event:"*",schema:"public",table:"findings"},reload).on("postgres_changes",{event:"*",schema:"public",table:"scan_runs"},reload).on("postgres_changes",{event:"*",schema:"public",table:"repair_jobs"},reload).subscribe()}
-supabase.auth.onAuthStateChange((event,s)=>{if(event==="PASSWORD_RECOVERY"){$("#auth").classList.remove("hide");$("#app").classList.add("hide");$("#recoveryBox").classList.remove("hide");$("#msg").textContent="Digite sua nova senha abaixo.";return}if(!s){$("#auth").classList.remove("hide");$("#app").classList.add("hide")}});
-start();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+  <footer class="foot">
+    <span>BUILD 2026.09.27-PC1</span>
+    <span>Executador Local • Windows</span>
+  </footer>
+</main>
+<script>
+if("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script>
-</body></html>
+</body>
+</html>
