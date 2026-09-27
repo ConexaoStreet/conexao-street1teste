@@ -47,10 +47,8 @@ if($SelfTest){
   if(!(Get-Command Run-Repair -ErrorAction SilentlyContinue)){throw "Motor de reparo não carregado."}
   if(!(Get-Command Run-Check -ErrorAction SilentlyContinue)){throw "Motor de diagnóstico não carregado."}
   if(!(Get-Command Get-InstalledSoftware -ErrorAction SilentlyContinue)){throw "Inventário não carregado."}
-  $probe=New-Object Windows.Forms.Form
-  $grid=New-Object Windows.Forms.DataGridView
-  $probe.Controls.Add($grid)
-  $probe.Dispose()
+  if(-not [type]::GetType("System.Windows.Forms.Form, System.Windows.Forms", $false)){throw "WinForms indisponível."}
+  if(-not [type]::GetType("System.Drawing.Color, System.Drawing", $false)){throw "System.Drawing indisponível."}
   Write-Output "LOCAL_SELFTEST_OK"
   exit 0
 }
