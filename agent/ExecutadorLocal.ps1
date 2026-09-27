@@ -279,7 +279,7 @@ function Refresh-Apps {
       $row["Tipo"]=$a.package_type
       $row["Editor"]=[string]$a.publisher
       $row["Identity"]=$a.identity_key
-      $row["PackageFamily"]=[string]$a.metadata.package_family_name
+      $row["PackageFamily"]=[string](Get-OptionalProperty $a.metadata "package_family_name" "")
       $table.Rows.Add($row)
     }
     $appsGrid.DataSource=$table
