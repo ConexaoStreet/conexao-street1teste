@@ -47,7 +47,7 @@
   <main class="main">
     <header class="top">
       <div><p class="ey">CENTRAL DE MANUTENÇÃO</p><h2 id="title">Visão geral</h2></div>
-      <div class="row"><span class="badge online cloud">● Nuvem conectada</span><button class="btn primary" data-pair>+ Conectar PC</button></div>
+      <div class="row"><span id="roleBadge" class="badge">USER</span><span class="badge online cloud">● Nuvem conectada</span><button class="btn primary" data-pair>+ Conectar PC</button></div>
     </header>
 
     <section id="view-home" class="view on">
@@ -120,7 +120,7 @@ const KEY="sb_publishable_6ah677Fpu1_PO7uamBBZYA_gfNqmOWo";
 const API=URL+"/functions/v1/agent-api";
 const supabase=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const st={devices:[],issues:[],scans:[],fixes:[],actions:[],apps:[],selected:null,channel:null,timer:null,mode:"login"};
+const st={devices:[],issues:[],scans:[],fixes:[],actions:[],apps:[],selected:null,channel:null,timer:null,mode:"login",role:"user"};
 const titles={home:"Visão geral",pcs:"Dispositivos",scan:"Diagnósticos",issues:"Problemas",apps:"Aplicativos",fixes:"Reparos"};
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 const empty=t=>'<div class="empty">'+esc(t)+'</div>';
@@ -144,9 +144,10 @@ async function load(){
   supabase.from("findings").select("*").in("state",["open","in_progress","recurring"]).order("last_seen_at",{ascending:false}).limit(100),
   supabase.from("scan_runs").select("*").order("created_at",{ascending:false}).limit(30),
   supabase.from("repair_jobs").select("*,repair_actions(action_key,name,risk_level,requires_admin,requires_reboot)").order("queued_at",{ascending:false}).limit(50),
-  supabase.from("repair_actions").select("*").eq("enabled",true)
+  supabase.from("repair_actions").select("*").eq("enabled",true),
+  supabase.from("user_roles").select("role").maybeSingle()
  ]);
- st.devices=r[0].data||[];st.issues=r[1].data||[];st.scans=r[2].data||[];st.fixes=r[3].data||[];st.actions=r[4].data||[];
+ st.devices=r[0].data||[];st.issues=r[1].data||[];st.scans=r[2].data||[];st.fixes=r[3].data||[];st.actions=r[4].data||[];st.role=r[5]?.data?.role||"user";
  if(!st.selected||!st.devices.some(x=>x.device_id===st.selected))st.selected=st.devices[0]?.device_id||null;
  st.apps=[];
  if(st.selected){const a=await supabase.from("software_inventory").select("*").eq("device_id",st.selected).eq("is_present",true).order("name").limit(700);st.apps=a.data||[]}
@@ -155,7 +156,7 @@ async function load(){
 const action=k=>st.actions.find(x=>x.action_key===k);
 function devItem(x){return'<div class="item"><div><strong>'+esc(x.display_name)+'</strong><small>'+esc(x.platform)+' '+esc(x.platform_version||"")+' • '+ago(x.last_seen_at)+'</small></div>'+badge(label(x.status),x.status)+'</div>'}
 function issueItem(x){const a=action(x.recommended_action_key);return'<div class="item"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.summary||x.category)+'</small></div><div class="row">'+badge(String(x.severity||"medium").toUpperCase(),x.severity)+(a?'<button class="btn" data-fix="'+x.id+'" data-action="'+esc(a.action_key)+'">Reparar</button>':"")+'</div></div>'}
-function render(){
+function render(){const rb=$("#roleBadge");if(rb){rb.textContent=st.role==="super_admin"?"SUPER ADMIN":st.role.toUpperCase();rb.className="badge "+(st.role==="super_admin"?"online":"");}
  const s=st.devices.find(x=>x.device_id===st.selected);
  $("#nDev").textContent=st.devices.length;$("#nIssue").textContent=st.issues.length;$("#nFix").textContent=st.fixes.filter(x=>["queued","leased","running"].includes(x.status)).length;$("#nApp").textContent=st.apps.length;
  $("#heroTitle").textContent=s?s.display_name:"Conecte seu primeiro computador";
