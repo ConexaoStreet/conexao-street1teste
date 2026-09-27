@@ -1,5 +1,6 @@
 param(
   [string]$PairCode,
+  [switch]$PairFromPc,
   [switch]$Daemon,
   [switch]$InventoryNow
 )
@@ -8,7 +9,7 @@ Set-StrictMode -Version 2
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$AgentVersion = "0.2.0"
+$AgentVersion = "0.3.0"
 $ApiBase = "https://skzyxapvleyktmgshvfp.supabase.co/functions/v1/agent-api"
 $Root = Join-Path $env:ProgramData "Executador"
 $ConfigPath = Join-Path $Root "agent.json"
@@ -117,6 +118,78 @@ function Get-DeviceInfo {
       sfc = $true
     }
   }
+}
+
+function New-AgentToken {
+  $bytes = New-Object byte[] 32
+  $rng = [Security.Cryptography.RandomNumberGenerator]::Create()
+  try { $rng.GetBytes($bytes) } finally { $rng.Dispose() }
+  return ([Convert]::ToBase64String($bytes)).TrimEnd("=").Replace("+","-").Replace("/","_")
+}
+
+function Pair-ComputerFromPc {
+  $token = New-AgentToken
+  $tokenHash = Get-Sha256Text $token
+  $device = Get-DeviceInfo
+
+  $r = Invoke-AgentApi "/agent/pairing/create" ([ordered]@{
+    agent_version = $AgentVersion
+    token_hash = $tokenHash
+    token_prefix = $token.Substring(0,8)
+    device = $device
+  }) -NoToken
+
+  if(!$r.ok -or !$r.code -or !$r.pairing_id) {
+    throw "Nao foi possivel gerar o codigo de conexao."
+  }
+
+  Clear-Host
+  Write-Host ""
+  Write-Host "============================================================" -ForegroundColor DarkCyan
+  Write-Host "                    EXECUTADOR" -ForegroundColor Green
+  Write-Host "============================================================" -ForegroundColor DarkCyan
+  Write-Host ""
+  Write-Host "CODIGO DE CONEXAO:" -ForegroundColor White
+  Write-Host ""
+  Write-Host ("        " + $r.code) -ForegroundColor Green
+  Write-Host ""
+  Write-Host "No celular:" -ForegroundColor Cyan
+  Write-Host "1. Abra o Executador." -ForegroundColor Gray
+  Write-Host "2. Toque em Conectar PC." -ForegroundColor Gray
+  Write-Host "3. Cole/digite este codigo e toque em Vincular." -ForegroundColor Gray
+  Write-Host ""
+  Write-Host "Aguardando o celular..." -ForegroundColor Yellow
+
+  $expires = [DateTime]::Parse([string]$r.expires_at).ToUniversalTime()
+
+  while((Get-Date).ToUniversalTime() -lt $expires) {
+    Start-Sleep -Seconds 2
+    try {
+      $s = Invoke-AgentApi "/agent/pairing/status" ([ordered]@{
+        pairing_id = [string]$r.pairing_id
+        token_hash = $tokenHash
+      }) -NoToken
+
+      if($s.status -eq "claimed" -and $s.device_id) {
+        Save-Config -Token $token -DeviceId ([string]$s.device_id)
+        Write-Log ("Paired by PC-generated code. Device " + $s.device_id)
+        Write-Host ""
+        Write-Host "PC VINCULADO COM SUCESSO!" -ForegroundColor Green
+        Write-Host "O Executador ja pode diagnosticar este computador." -ForegroundColor Green
+        Start-Sleep -Seconds 2
+        return $s
+      }
+
+      if($s.status -in @("expired","cancelled")) {
+        throw "O codigo expirou ou foi cancelado. Gere outro codigo."
+      }
+    } catch {
+      if($_.Exception.Message -match "expirou|cancelado") { throw }
+      Write-Log ("Pair status: " + $_.Exception.Message) "WARN"
+    }
+  }
+
+  throw "O codigo expirou. Execute o pareador novamente para gerar outro."
 }
 
 function Pair-Computer {
@@ -535,6 +608,15 @@ function Process-Tasks {
 }
 
 try {
+  if($PairFromPc){
+    $r=Pair-ComputerFromPc
+    Send-Heartbeat
+    Send-Inventory | Out-Null
+    Write-Host ""
+    Write-Host "Sessao ativa. Mantenha esta janela aberta." -ForegroundColor Cyan
+    $Daemon=$true
+  }
+
   if($PairCode){
     $r=Pair-Computer $PairCode
     Send-Heartbeat
@@ -564,7 +646,7 @@ try {
   }
 
   Write-Output ("Executador Agent " + $AgentVersion)
-  Write-Output "Use -PairCode CODIGO, -InventoryNow or -Daemon."
+  Write-Output "Use -PairFromPc para gerar codigo, -InventoryNow ou -Daemon."
 } catch {
   Write-Log $_.Exception.Message "ERROR"
   Write-Error $_.Exception.Message
