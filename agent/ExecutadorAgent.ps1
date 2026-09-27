@@ -9,7 +9,7 @@ Set-StrictMode -Version 2
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$AgentVersion = "0.3.0"
+$AgentVersion = "0.3.1"
 $ApiBase = "https://skzyxapvleyktmgshvfp.supabase.co/functions/v1/agent-api"
 $Root = Join-Path $env:ProgramData "Executador"
 $ConfigPath = Join-Path $Root "agent.json"
@@ -35,6 +35,14 @@ function Get-Sha256Text {
     $bytes = [Text.Encoding]::UTF8.GetBytes([string]$Text)
     return ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace("-","").ToLowerInvariant()
   } finally { $sha.Dispose() }
+}
+
+function Get-OptionalProperty {
+  param([object]$Object,[string]$Name,[object]$Default=$null)
+  if($null -eq $Object){ return $Default }
+  $prop = $Object.PSObject.Properties[$Name]
+  if($null -eq $prop){ return $Default }
+  return $prop.Value
 }
 
 function Protect-Text {
@@ -230,44 +238,78 @@ function Get-InstalledSoftware {
     "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*",
     "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*"
   )
+
   foreach($p in $paths) {
-    Get-ItemProperty $p -ErrorAction SilentlyContinue | Where-Object {$_.DisplayName} | ForEach-Object {
-      $child = [string]$_.PSChildName
-      $identity = if ($child -match "^\{[0-9A-Fa-f-]{36}\}$") { "msi:" + $child } else { "reg:" + (Get-Sha256Text ($_.DisplayName+"|"+$_.Publisher+"|"+$_.DisplayVersion+"|"+$child)) }
-      $items.Add([ordered]@{
-        identity_key=$identity
-        name=$_.DisplayName
-        publisher=$_.Publisher
-        version=$_.DisplayVersion
-        install_source=$_.InstallSource
-        package_type=$(if($identity.StartsWith("msi:")){"msi"}else{"registry"})
-        path_hash=$(if($_.InstallLocation){Get-Sha256Text $_.InstallLocation}else{$null})
-        architecture=$(if($p -like "*WOW6432Node*"){"x86"}else{$null})
-        update_available=$null
-        latest_version=$null
-        vulnerability_summary=[ordered]@{}
-        metadata=[ordered]@{uninstall_key=$child}
-      })
+    $entries = @(Get-ItemProperty $p -ErrorAction SilentlyContinue)
+    foreach($entry in $entries) {
+      try {
+        $displayName = [string](Get-OptionalProperty $entry "DisplayName" "")
+        if([string]::IsNullOrWhiteSpace($displayName)){ continue }
+
+        $child = [string](Get-OptionalProperty $entry "PSChildName" "")
+        $publisher = [string](Get-OptionalProperty $entry "Publisher" "")
+        $displayVersion = [string](Get-OptionalProperty $entry "DisplayVersion" "")
+        $installSource = [string](Get-OptionalProperty $entry "InstallSource" "")
+        $installLocation = [string](Get-OptionalProperty $entry "InstallLocation" "")
+
+        $identity = if ($child -match "^\{[0-9A-Fa-f-]{36}\}$") {
+          "msi:" + $child
+        } else {
+          "reg:" + (Get-Sha256Text ($displayName+"|"+$publisher+"|"+$displayVersion+"|"+$child))
+        }
+
+        $items.Add([ordered]@{
+          identity_key=$identity
+          name=$displayName
+          publisher=$(if($publisher){$publisher}else{$null})
+          version=$(if($displayVersion){$displayVersion}else{$null})
+          install_source=$(if($installSource){$installSource}else{$null})
+          package_type=$(if($identity.StartsWith("msi:")){"msi"}else{"registry"})
+          path_hash=$(if($installLocation){Get-Sha256Text $installLocation}else{$null})
+          architecture=$(if($p -like "*WOW6432Node*"){"x86"}else{$null})
+          update_available=$null
+          latest_version=$null
+          vulnerability_summary=[ordered]@{}
+          metadata=[ordered]@{uninstall_key=$child}
+        })
+      } catch {
+        Write-Log ("Software inventory item skipped: " + $_.Exception.Message) "WARN"
+      }
     }
   }
+
   try {
     Get-AppxPackage -AllUsers -ErrorAction SilentlyContinue | ForEach-Object {
-      $items.Add([ordered]@{
-        identity_key=("appx:" + $_.PackageFamilyName)
-        name=$_.Name
-        publisher=$_.Publisher
-        version=$_.Version.ToString()
-        install_source="Microsoft Store / AppX"
-        package_type="appx"
-        path_hash=$null
-        architecture=$_.Architecture.ToString()
-        update_available=$null
-        latest_version=$null
-        vulnerability_summary=[ordered]@{}
-        metadata=[ordered]@{package_family_name=$_.PackageFamilyName;package_full_name=$_.PackageFullName}
-      })
+      try {
+        $family = [string](Get-OptionalProperty $_ "PackageFamilyName" "")
+        $name = [string](Get-OptionalProperty $_ "Name" "")
+        if(!$family -or !$name){ return }
+        $publisher = [string](Get-OptionalProperty $_ "Publisher" "")
+        $versionObj = Get-OptionalProperty $_ "Version" $null
+        $archObj = Get-OptionalProperty $_ "Architecture" $null
+        $fullName = [string](Get-OptionalProperty $_ "PackageFullName" "")
+        $items.Add([ordered]@{
+          identity_key=("appx:" + $family)
+          name=$name
+          publisher=$(if($publisher){$publisher}else{$null})
+          version=$(if($versionObj){$versionObj.ToString()}else{$null})
+          install_source="Microsoft Store / AppX"
+          package_type="appx"
+          path_hash=$null
+          architecture=$(if($archObj){$archObj.ToString()}else{$null})
+          update_available=$null
+          latest_version=$null
+          vulnerability_summary=[ordered]@{}
+          metadata=[ordered]@{package_family_name=$family;package_full_name=$fullName}
+        })
+      } catch {
+        Write-Log ("AppX inventory item skipped: " + $_.Exception.Message) "WARN"
+      }
     }
-  } catch {}
+  } catch {
+    Write-Log ("AppX inventory unavailable: " + $_.Exception.Message) "WARN"
+  }
+
   return @($items | Group-Object identity_key | ForEach-Object {$_.Group | Select-Object -First 1})
 }
 
@@ -611,7 +653,13 @@ try {
   if($PairFromPc){
     $r=Pair-ComputerFromPc
     Send-Heartbeat
-    Send-Inventory | Out-Null
+    try {
+      Send-Inventory | Out-Null
+    } catch {
+      Write-Log ("Initial inventory failed after successful pairing: " + $_.Exception.Message) "WARN"
+      Write-Host ""
+      Write-Host "PC vinculado. O inventario inicial teve um aviso, mas a conexao continua." -ForegroundColor Yellow
+    }
     Write-Host ""
     Write-Host "Sessao ativa. Mantenha esta janela aberta." -ForegroundColor Cyan
     $Daemon=$true
