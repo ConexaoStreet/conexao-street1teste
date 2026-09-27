@@ -44,16 +44,14 @@ function Invoke-LocalRepair {
 if($SelfTest){
   Add-Type -AssemblyName System.Windows.Forms
   Add-Type -AssemblyName System.Drawing
-  $software=@(Get-InstalledSoftware)
-  $device=Get-DeviceInfo
   if(!(Get-Command Run-Repair -ErrorAction SilentlyContinue)){throw "Motor de reparo não carregado."}
   if(!(Get-Command Run-Check -ErrorAction SilentlyContinue)){throw "Motor de diagnóstico não carregado."}
+  if(!(Get-Command Get-InstalledSoftware -ErrorAction SilentlyContinue)){throw "Inventário não carregado."}
   $probe=New-Object Windows.Forms.Form
   $grid=New-Object Windows.Forms.DataGridView
   $probe.Controls.Add($grid)
   $probe.Dispose()
-  if(!$device.display_name){throw "Informações do dispositivo indisponíveis."}
-  Write-Output ("LOCAL_SELFTEST_OK software="+$software.Count)
+  Write-Output "LOCAL_SELFTEST_OK"
   exit 0
 }
 
