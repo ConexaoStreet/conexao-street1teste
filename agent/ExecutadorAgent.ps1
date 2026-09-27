@@ -649,6 +649,13 @@ try {
   Write-Output "Use -PairFromPc para gerar codigo, -InventoryNow ou -Daemon."
 } catch {
   Write-Log $_.Exception.Message "ERROR"
-  Write-Error $_.Exception.Message
+  Write-Host ""
+  Write-Host "============================================================" -ForegroundColor DarkRed
+  Write-Host "ERRO NO EXECUTADOR AGENT" -ForegroundColor Red
+  Write-Host $_.Exception.Message -ForegroundColor Yellow
+  Write-Host ""
+  Write-Host ("Log: " + $LogPath) -ForegroundColor Gray
+  Write-Host "============================================================" -ForegroundColor DarkRed
+  if($PairFromPc){ Read-Host "Pressione ENTER para fechar" | Out-Null }
   exit 1
 }
