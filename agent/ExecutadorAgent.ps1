@@ -2,7 +2,8 @@ param(
   [string]$PairCode,
   [switch]$PairFromPc,
   [switch]$Daemon,
-  [switch]$InventoryNow
+  [switch]$InventoryNow,
+  [switch]$SelfTest
 )
 
 Set-StrictMode -Version 2
@@ -650,6 +651,13 @@ function Process-Tasks {
 }
 
 try {
+  if($SelfTest){
+    $software=@(Get-InstalledSoftware)
+    if($software.Count -lt 0){ throw "Invalid software inventory count." }
+    Write-Output ("SELFTEST_OK software=" + $software.Count)
+    exit 0
+  }
+
   if($PairFromPc){
     $r=Pair-ComputerFromPc
     Send-Heartbeat
@@ -694,7 +702,7 @@ try {
   }
 
   Write-Output ("Executador Agent " + $AgentVersion)
-  Write-Output "Use -PairFromPc para gerar codigo, -InventoryNow ou -Daemon."
+  Write-Output "Use -PairFromPc para gerar codigo, -InventoryNow, -Daemon ou -SelfTest."
 } catch {
   Write-Log $_.Exception.Message "ERROR"
   Write-Host ""
