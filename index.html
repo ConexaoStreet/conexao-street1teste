@@ -100,10 +100,15 @@
 
 <dialog id="pair" class="modal glass">
   <div class="head"><h3>Conectar computador</h3><button id="close" class="btn">×</button></div>
-  <p class="muted">Abra o Executador Agent no Windows e digite o código abaixo ou escaneie o QR.</p>
+  <p class="muted">No PC, baixe o pareador abaixo, execute-o e digite o código mostrado. O Windows pedirá permissão de Administrador de forma visível.</p>
+  <div class="row" style="margin:12px 0">
+    <a class="btn primary" href="./agent/Parear-Executador.cmd" download>Parear no PC</a>
+    <a class="btn" href="./agent/Start-Executador.cmd" download>Iniciar Agent</a>
+  </div>
   <div id="code" class="code">----</div>
   <div id="qr" class="qr"></div>
   <p id="pairState" class="muted">Gerando código...</p>
+  <p class="muted" style="font-size:12px">Depois do primeiro pareamento, abra <b>Start-Executador.cmd</b> no PC sempre que quiser usar diagnóstico e reparos pelo celular. Fechar a janela encerra a sessão.</p>
   <button id="copy" class="btn" style="width:100%">Copiar código</button>
 </dialog>
 <div id="toast" class="toast hide"></div>
