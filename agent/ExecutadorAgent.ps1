@@ -167,9 +167,9 @@ function Get-InstalledSoftware {
         publisher=$_.Publisher
         version=$_.DisplayVersion
         install_source=$_.InstallSource
-        package_type=if($identity.StartsWith("msi:")){"msi"}else{"registry"}
-        path_hash=if($_.InstallLocation){Get-Sha256Text $_.InstallLocation}else{$null}
-        architecture=if($p -like "*WOW6432Node*"){"x86"}else{$null}
+        package_type=$(if($identity.StartsWith("msi:")){"msi"}else{"registry"})
+        path_hash=$(if($_.InstallLocation){Get-Sha256Text $_.InstallLocation}else{$null})
+        architecture=$(if($p -like "*WOW6432Node*"){"x86"}else{$null})
         update_available=$null
         latest_version=$null
         vulnerability_summary=[ordered]@{}
@@ -225,7 +225,7 @@ function Get-StartupItems {
       enabled=$true
       impact="unknown"
       publisher=$null
-      path_hash=if($_.Command){Get-Sha256Text $_.Command}else{$null}
+      path_hash=$(if($_.Command){Get-Sha256Text $_.Command}else{$null})
       metadata=[ordered]@{}
     }
   })
@@ -278,8 +278,8 @@ function Get-NetworkInfo {
   try {$p=Test-Connection 1.1.1.1 -Count 1 -ErrorAction Stop;$internet=$true;$lat=[double]$p.ResponseTime}catch{}
   try {$sw=[Diagnostics.Stopwatch]::StartNew();Resolve-DnsName "www.microsoft.com" -ErrorAction Stop | Out-Null;$sw.Stop();$dns=[double]$sw.ElapsedMilliseconds}catch{}
   [ordered]@{
-    interface_type=if($adapter){$adapter.MediaType}else{$null}
-    interface_name=if($adapter){$adapter.Name}else{$null}
+    interface_type=$(if($adapter){$adapter.MediaType}else{$null})
+    interface_name=$(if($adapter){$adapter.Name}else{$null})
     connected=[bool]$adapter
     wifi_signal_percent=$null
     mobile_signal_dbm=$null
@@ -292,7 +292,7 @@ function Get-NetworkInfo {
     gateway_reachable=$null
     internet_reachable=$internet
     captive_portal=$false
-    details=[ordered]@{link_speed=if($adapter){$adapter.LinkSpeed}else{$null}}
+    details=[ordered]@{link_speed=$(if($adapter){$adapter.LinkSpeed}else{$null})}
   }
 }
 
@@ -344,12 +344,12 @@ function New-Result {
   [ordered]@{
     check_id=$Def.id
     status=$Status
-    severity=if($Status -in @("warning","fail","error")){$Def.default_severity}else{"info"}
+    severity=$(if($Status -in @("warning","fail","error")){$Def.default_severity}else{"info"})
     title=$Title
     summary=$Summary
-    measured_values=if($Values){$Values}else{[ordered]@{}}
+    measured_values=$(if($Values){$Values}else{[ordered]@{}})
     evidence=[ordered]@{}
-    recommended_action_keys=if($Actions){@($Actions)}else{@()}
+    recommended_action_keys=$(if($Actions){@($Actions)}else{@()})
     completed_at=(Get-Date).ToUniversalTime().ToString("o")
   }
 }
@@ -389,20 +389,20 @@ function Run-Check {
       }
       "network.internet" {
         $ok=$false;$ms=$null;try{$p=Test-Connection 1.1.1.1 -Count 1 -ErrorAction Stop;$ok=$true;$ms=[double]$p.ResponseTime}catch{};$s=if($ok){"pass"}else{"fail"}
-        return New-Result $Def $s "Internet" (if($ok){"Conectado • "+$ms+" ms"}else{"Sem resposta externa"}) @{reachable=$ok;latency_ms=$ms} (Get-ActionList $Def $s)
+        return New-Result $Def $s "Internet" $(if($ok){"Conectado • "+$ms+" ms"}else{"Sem resposta externa"}) @{reachable=$ok;latency_ms=$ms} (Get-ActionList $Def $s)
       }
       "network.dns" {
         $ok=$false;$ms=$null;try{$sw=[Diagnostics.Stopwatch]::StartNew();Resolve-DnsName "www.microsoft.com" -ErrorAction Stop|Out-Null;$sw.Stop();$ok=$true;$ms=$sw.ElapsedMilliseconds}catch{};$s=if(!$ok){"fail"}elseif($ms -gt 250){"warning"}else{"pass"}
-        return New-Result $Def $s "DNS" (if($ok){$ms.ToString()+" ms"}else{"Falha de resolução"}) @{latency_ms=$ms} (Get-ActionList $Def $s)
+        return New-Result $Def $s "DNS" $(if($ok){$ms.ToString()+" ms"}else{"Falha de resolução"}) @{latency_ms=$ms} (Get-ActionList $Def $s)
       }
       "security.firewall" {
         $bad=@(Get-NetFirewallProfile -ErrorAction SilentlyContinue | Where-Object {!$_.Enabled});$s=if($bad.Count){"fail"}else{"pass"}
-        return New-Result $Def $s "Firewall" (if($bad.Count){$bad.Count.ToString()+" perfil(is) desativado(s)"}else{"Todos os perfis ativos"}) @{disabled=@($bad.Name)} (Get-ActionList $Def $s)
+        return New-Result $Def $s "Firewall" $(if($bad.Count){$bad.Count.ToString()+" perfil(is) desativado(s)"}else{"Todos os perfis ativos"}) @{disabled=@($bad.Name)} (Get-ActionList $Def $s)
       }
       "security.antimalware" {
         if(!(Get-Command Get-MpComputerStatus -ErrorAction SilentlyContinue)){return New-Result $Def "skipped" "Antimalware" "Status indisponível" @{} @()}
         $m=Get-MpComputerStatus;$ok=$m.AntivirusEnabled -and $m.RealTimeProtectionEnabled;$s=if($ok){"pass"}else{"fail"}
-        return New-Result $Def $s "Proteção antimalware" (if($ok){"Proteção ativa"}else{"Proteção incompleta"}) @{antivirus=$m.AntivirusEnabled;realtime=$m.RealTimeProtectionEnabled} (Get-ActionList $Def $s)
+        return New-Result $Def $s "Proteção antimalware" $(if($ok){"Proteção ativa"}else{"Proteção incompleta"}) @{antivirus=$m.AntivirusEnabled;realtime=$m.RealTimeProtectionEnabled} (Get-ActionList $Def $s)
       }
       "drivers.health" {
         $bad=@(Get-CimInstance Win32_PnPEntity -ErrorAction SilentlyContinue | Where-Object {$_.ConfigManagerErrorCode -ne 0});$s=if($bad.Count){"warning"}else{"pass"}
@@ -418,7 +418,7 @@ function Run-Check {
       }
       "software.install_integrity" {
         $cr=@(Get-CrashReports);$bad=@($cr|Where-Object {$_.app_name}|Group-Object app_name|Where-Object {$_.Count -ge 3});$s=if($bad.Count){"warning"}else{"pass"}
-        return New-Result $Def $s "Integridade de aplicativos" (if($bad.Count){$bad.Count.ToString()+" aplicativo(s) com falhas recorrentes"}else{"Sem falhas recorrentes detectadas"}) @{problem_apps=@($bad|ForEach-Object {[ordered]@{name=$_.Name;crashes=$_.Count}})} @()
+        return New-Result $Def $s "Integridade de aplicativos" $(if($bad.Count){$bad.Count.ToString()+" aplicativo(s) com falhas recorrentes"}else{"Sem falhas recorrentes detectadas"}) @{problem_apps=@($bad|ForEach-Object {[ordered]@{name=$_.Name;crashes=$_.Count}})} @()
       }
       "software.msi_health" {
         $ev=@(Get-WinEvent -FilterHashtable @{LogName="Application";ProviderName="MsiInstaller";Level=2;StartTime=(Get-Date).AddDays(-7)} -MaxEvents 80 -ErrorAction SilentlyContinue);$s=if($ev.Count){"warning"}else{"pass"}
