@@ -97,7 +97,20 @@ if not exist "%AGENT%" (
 
 if exist "%TMPAGENT%" del /q "%TMPAGENT%" >nul 2>&1
 
-echo Agent disponivel em:
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$t=Get-Content '%AGENT%' -Raw -ErrorAction SilentlyContinue; if($t -match '\$AgentVersion\s*=\s*"0\.3\.1"'){exit 0}else{exit 1}"
+if errorlevel 1 (
+  echo.
+  echo ============================================================
+  echo [ERRO] A copia local do Agent esta antiga ou incompleta.
+  echo Preciso da versao 0.3.1 para evitar o erro InstallSource.
+  echo O download novo tambem falhou neste PC.
+  echo ============================================================
+  echo.
+  pause
+  exit /b 1
+)
+
+echo Agent 0.3.1 confirmado em:
 echo %AGENT%
 echo.
 echo Executador iniciado como Administrador.
