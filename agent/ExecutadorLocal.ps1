@@ -7,6 +7,7 @@ Set-StrictMode -Version 2
 $ErrorActionPreference="Stop"
 
 if(!(Test-Path -LiteralPath $AgentPath)){throw "ExecutadorAgent.ps1 não encontrado."}
+$RequestedSelfTest=[bool]$SelfTest
 . $AgentPath | Out-Null
 
 function Get-LocalDiagnosticDefinitions {
@@ -41,7 +42,7 @@ function Invoke-LocalRepair {
   return $result
 }
 
-if($SelfTest){
+if($RequestedSelfTest){
   Add-Type -AssemblyName System.Windows.Forms
   Add-Type -AssemblyName System.Drawing
   if(!(Get-Command Run-Repair -ErrorAction SilentlyContinue)){throw "Motor de reparo não carregado."}
