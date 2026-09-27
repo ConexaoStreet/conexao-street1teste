@@ -85,7 +85,7 @@
 
     <section id="view-issues" class="view"><div class="panel glass"><div class="head"><h3>Problemas encontrados</h3></div><div id="issues" class="list"></div></div></section>
 
-    <section id="view-apps" class="view"><div class="panel glass"><div class="head"><h3>Aplicativos instalados</h3><input id="findApp" class="search" placeholder="Buscar aplicativo"></div><div id="appsList"></div></div></section>
+    <section id="view-apps" class="view"><div class="panel glass"><div class="head"><h3>Aplicativos instalados</h3><div class="row"><input id="findApp" class="search" placeholder="Buscar aplicativo"><button id="updateApps" class="btn">Atualizar apps</button></div></div><div id="appsList"></div></div></section>
 
     <section id="view-fixes" class="view"><div class="panel glass"><div class="head"><h3>Fila e histórico de reparos</h3></div><div id="fixes" class="list"></div></div></section>
   </main>
@@ -171,8 +171,12 @@ function render(){
  $("#fixes").innerHTML=st.fixes.length?st.fixes.map(x=>'<div class="item"><div><strong>'+esc(x.repair_actions?.name||"Reparo")+'</strong><small>'+new Date(x.queued_at).toLocaleString("pt-BR")+'</small></div>'+badge(label(x.status),x.status)+'</div>').join(""):empty("Nenhum reparo solicitado.");
  renderApps()
 }
-function renderApps(){const q=($("#findApp").value||"").toLowerCase();const a=st.apps.filter(x=>!q||(x.name+" "+(x.publisher||"")).toLowerCase().includes(q));$("#appsList").innerHTML=a.length?a.map(x=>'<div class="softrow"><div><strong>'+esc(x.name)+'</strong><small>'+esc(x.publisher||"Publicador desconhecido")+'</small></div><div><small>'+esc(x.version||"—")+'</small></div><div>'+badge(x.update_available?"Atualização":"Instalado",x.update_available?"medium":"completed")+'</div></div>').join(""):empty(st.selected?"Nenhum aplicativo encontrado.":"Selecione um PC.")}
+function renderApps(){const q=($("#findApp").value||"").toLowerCase();const a=st.apps.filter(x=>!q||(x.name+" "+(x.publisher||"")).toLowerCase().includes(q));$("#appsList").innerHTML=a.length?a.map(x=>{const i=st.apps.indexOf(x);const canMsi=x.package_type==="msi"&&x.identity_key?.startsWith("msi:");const canAppx=x.package_type==="appx"&&x.metadata?.package_family_name;const repair=canMsi?'<button class="btn" data-appfix="'+i+'" data-kind="msi">Reparar</button>':canAppx?'<button class="btn" data-appfix="'+i+'" data-kind="appx">Reparar</button>':"";return '<div class="softrow"><div><strong>'+esc(x.name)+'</strong><small>'+esc(x.publisher||"Publicador desconhecido")+'</small></div><div><small>'+esc(x.version||"—")+'</small></div><div class="row">'+badge(x.update_available?"Atualização":"Instalado",x.update_available?"medium":"completed")+repair+'</div></div>'}).join(""):empty(st.selected?"Nenhum aplicativo encontrado.":"Selecione um PC.");$("[data-appfix]").forEach(b=>b.onclick=()=>repairInstalledApp(Number(b.dataset.appfix),b.dataset.kind))}
 $("#findApp").oninput=renderApps;
+
+async function repairInstalledApp(i,kind){const x=st.apps[i];if(!x||!st.selected)return;const actionKey=kind==="appx"?"windows.reregister_store_app":"software.repair_app";const params=kind==="appx"?{package_family_name:x.metadata?.package_family_name}:{identity_key:x.identity_key,name:x.name};if(!confirm("Reparar “"+x.name+"”? O Executador usará somente o mecanismo conhecido para este tipo de pacote."))return;try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:actionKey,parameters:params,idempotency_key:"app:"+x.identity_key+":"+Date.now()})});toast("Reparo enviado ao PC");await load();view("fixes")}catch(e){toast(e.message)}}
+
+$("#updateApps").onclick=async()=>{if(!st.selected)return toast("Selecione um PC");if(!confirm("Atualizar aplicativos suportados pelo Windows Package Manager?"))return;try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:"software.update_apps",parameters:{},idempotency_key:"update-apps:"+Date.now()})});toast("Atualização adicionada à fila");await load();view("fixes")}catch(e){toast(e.message)}};
 
 async function scan(template){if(!st.selected)return toast("Conecte ou selecione um PC");try{await api("/scan/start",{method:"POST",body:JSON.stringify({device_id:st.selected,template_key:template,client_context:{requested_from:"panel"}})});toast("Diagnóstico enviado ao PC");await load();view("scan")}catch(e){toast(e.message)}}
 $("#quick").onclick=()=>scan("quick");$("#deep").onclick=()=>scan("windows_deep");$$("[data-scan]").forEach(x=>x.onclick=()=>scan(x.dataset.scan));
