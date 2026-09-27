@@ -25,7 +25,17 @@
       <label>Senha<input id="pass" type="password" minlength="6" required autocomplete="current-password"></label>
       <button id="submit" class="btn primary">Entrar</button>
     </form>
-    <button id="toggle" class="btn" style="width:100%;margin-top:8px">Criar conta</button>
+    <div class="row" style="margin-top:8px">
+      <button id="toggle" class="btn" style="flex:1">Criar conta</button>
+      <button id="forgot" class="btn" style="flex:1">Esqueci minha senha</button>
+    </div>
+    <div id="recoveryBox" class="hide" style="margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px">
+      <strong>Definir nova senha</strong>
+      <div class="form" style="margin-top:10px">
+        <label>Nova senha<input id="newPass" type="password" minlength="8" autocomplete="new-password"></label>
+        <button id="savePass" class="btn primary" type="button">Salvar nova senha</button>
+      </div>
+    </div>
     <p id="msg" class="msg"></p>
   </div>
 </section>
@@ -134,6 +144,10 @@ function view(v){$$(".view").forEach(x=>x.classList.toggle("on",x.id==="view-"+v
 $$("[data-view]").forEach(x=>x.onclick=()=>view(x.dataset.view));
 
 $("#toggle").onclick=()=>{st.mode=st.mode==="login"?"signup":"login";$("#submit").textContent=st.mode==="login"?"Entrar":"Criar conta";$("#toggle").textContent=st.mode==="login"?"Criar conta":"Já tenho conta";$("#msg").textContent=""};
+
+$("#forgot").onclick=async()=>{const email=$("#email").value.trim();if(!email)return $("#msg").textContent="Digite seu e-mail primeiro.";$("#forgot").disabled=true;try{const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;$("#msg").textContent="Enviei o link de recuperação para seu e-mail."}catch(e){$("#msg").textContent=e.message||String(e)}finally{$("#forgot").disabled=false}};
+
+$("#savePass").onclick=async()=>{const password=$("#newPass").value;if(password.length<8)return $("#msg").textContent="Use pelo menos 8 caracteres.";$("#savePass").disabled=true;try{const {error}=await supabase.auth.updateUser({password});if(error)throw error;$("#msg").textContent="Senha alterada. Você já pode entrar.";$("#recoveryBox").classList.add("hide");await supabase.auth.signOut()}catch(e){$("#msg").textContent=e.message||String(e)}finally{$("#savePass").disabled=false}};
 $("#form").onsubmit=async e=>{e.preventDefault();$("#submit").disabled=true;$("#msg").textContent="";try{let res=st.mode==="login"?await supabase.auth.signInWithPassword({email:$("#email").value,password:$("#pass").value}):await supabase.auth.signUp({email:$("#email").value,password:$("#pass").value});if(res.error)throw res.error;if(st.mode==="signup"&&!res.data.session)$("#msg").textContent="Conta criada. Confirme o e-mail e depois entre.";else await start()}catch(err){$("#msg").textContent=err.message||String(err)}finally{$("#submit").disabled=false}};
 $("#logout").onclick=async()=>{await supabase.auth.signOut();location.reload()};
 
@@ -190,7 +204,7 @@ async function pair(){dlg.showModal();$("#code").textContent="----";$("#qr").inn
 $$("[data-pair]").forEach(x=>x.onclick=pair);$("#close").onclick=()=>dlg.close();$("#copy").onclick=()=>navigator.clipboard.writeText($("#code").textContent).then(()=>toast("Código copiado"));dlg.onclose=()=>clearInterval(st.timer);
 
 function realtime(){if(st.channel)supabase.removeChannel(st.channel);let debounce;const reload=()=>{clearTimeout(debounce);debounce=setTimeout(load,700)};st.channel=supabase.channel("executador-panel").on("postgres_changes",{event:"*",schema:"public",table:"devices"},reload).on("postgres_changes",{event:"*",schema:"public",table:"findings"},reload).on("postgres_changes",{event:"*",schema:"public",table:"scan_runs"},reload).on("postgres_changes",{event:"*",schema:"public",table:"repair_jobs"},reload).subscribe()}
-supabase.auth.onAuthStateChange((_event,s)=>{if(!s){$("#auth").classList.remove("hide");$("#app").classList.add("hide")}});
+supabase.auth.onAuthStateChange((event,s)=>{if(event==="PASSWORD_RECOVERY"){$("#auth").classList.remove("hide");$("#app").classList.add("hide");$("#recoveryBox").classList.remove("hide");$("#msg").textContent="Digite sua nova senha abaixo.";return}if(!s){$("#auth").classList.remove("hide");$("#app").classList.add("hide")}});
 start();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script>
