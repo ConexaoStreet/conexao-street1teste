@@ -65,7 +65,7 @@
         <div>
           <p class="ey">STATUS GERAL</p>
           <h3 id="heroTitle">Conecte seu primeiro computador</h3>
-          <p id="heroSub">Instale o agente do Windows e faça o pareamento pelo código.</p>
+          <p id="heroSub">No PC, abra o botão de conexão; ele gera o código que você cola aqui no celular.</p>
           <div class="row"><button id="quick" class="btn primary">Diagnóstico rápido</button><button id="deep" class="btn">Windows profundo</button></div>
         </div>
         <div id="score" class="score">--</div>
@@ -110,16 +110,16 @@
 
 <dialog id="pair" class="modal glass">
   <div class="head"><h3>Conectar computador</h3><button id="close" class="btn">×</button></div>
-  <p class="muted">No PC, baixe o pareador abaixo, execute-o e digite o código mostrado. O Windows pedirá permissão de Administrador de forma visível.</p>
+  <p class="muted"><b>1.</b> No PC, execute o pareador. Ele abre como Administrador e mostra um código.</p>
   <div class="row" style="margin:12px 0">
-    <a class="btn primary" href="./agent/Parear-Executador.cmd" download>Parear no PC</a>
+    <a class="btn primary" href="./agent/Parear-Executador.cmd" download>Baixar botão do PC</a>
     <a class="btn" href="./agent/Start-Executador.cmd" download>Iniciar Agent</a>
   </div>
-  <div id="code" class="code">----</div>
-  <div id="qr" class="qr"></div>
-  <p id="pairState" class="muted">Gerando código...</p>
-  <p class="muted" style="font-size:12px">Depois do primeiro pareamento, abra <b>Start-Executador.cmd</b> no PC sempre que quiser usar diagnóstico e reparos pelo celular. Fechar a janela encerra a sessão.</p>
-  <button id="copy" class="btn" style="width:100%">Copiar código</button>
+  <p class="muted"><b>2.</b> Cole aqui o código que apareceu no PC:</p>
+  <input id="pcCode" class="search" inputmode="text" autocomplete="one-time-code" maxlength="12" placeholder="Ex.: AB12CD34" style="width:100%;font:900 24px ui-monospace,monospace;letter-spacing:.15em;text-align:center;text-transform:uppercase;padding:16px">
+  <button id="claimPc" class="btn primary" style="width:100%;margin-top:10px">Vincular este PC</button>
+  <p id="pairState" class="muted" style="margin-top:12px">O código é gerado no computador e dura 15 minutos.</p>
+  <p class="muted" style="font-size:12px">Depois de vincular uma vez, use <b>Start-Executador.cmd</b>. Os dois arquivos solicitam Administrador automaticamente.</p>
 </dialog>
 <div id="toast" class="toast hide"></div>
 
@@ -200,8 +200,11 @@ async function repair(id,key){const a=action(key);if(!a||!st.selected)return;if(
 $("#safe").onclick=async()=>{const q=st.issues.map(f=>({f,a:action(f.recommended_action_key)})).filter(x=>x.a&&x.a.risk_level==="low"&&!x.a.requires_admin);if(!q.length)return toast("Sem correções automáticas de baixo risco");if(!confirm("Executar "+q.length+" correção(ões) segura(s)?"))return;for(const x of q){try{await api("/repair/queue",{method:"POST",body:JSON.stringify({device_id:st.selected,action_key:x.a.action_key,finding_id:x.f.id,idempotency_key:x.f.id+":"+x.a.action_key})})}catch{}}toast("Correções adicionadas à fila");load()};
 
 const dlg=$("#pair");
-async function pair(){dlg.showModal();$("#code").textContent="----";$("#qr").innerHTML="";$("#pairState").textContent="Gerando código...";try{const d=await api("/pairing/create",{method:"POST",body:"{}"});$("#code").textContent=d.code;$("#pairState").textContent="Aguardando o PC...";if(window.QRCode)new QRCode($("#qr"),{text:JSON.stringify(d.qr_payload),width:140,height:140});clearInterval(st.timer);st.timer=setInterval(async()=>{try{const x=await api("/pairing/status?id="+encodeURIComponent(d.pairing_id));if(x.pairing?.status==="claimed"){clearInterval(st.timer);$("#pairState").textContent="PC conectado!";toast("Novo PC conectado");await load();setTimeout(()=>dlg.close(),900)}}catch{}},2500)}catch(e){$("#pairState").textContent=e.message}}
-$$("[data-pair]").forEach(x=>x.onclick=pair);$("#close").onclick=()=>dlg.close();$("#copy").onclick=()=>navigator.clipboard.writeText($("#code").textContent).then(()=>toast("Código copiado"));dlg.onclose=()=>clearInterval(st.timer);
+function pair(){dlg.showModal();$("#pcCode").value="";$("#pairState").textContent="Abra o botão do PC para gerar o código.";setTimeout(()=>$("#pcCode").focus(),120)}
+$("#claimPc").onclick=async()=>{const code=$("#pcCode").value.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");if(code.length<6)return $("#pairState").textContent="Digite o código mostrado no computador.";$("#claimPc").disabled=true;$("#pairState").textContent="Vinculando...";try{const d=await api("/pairing/claim-pc",{method:"POST",body:JSON.stringify({code})});$("#pairState").textContent="PC conectado com sucesso!";toast((d.display_name||"PC")+" vinculado");await load();setTimeout(()=>dlg.close(),700)}catch(e){const m=String(e.message||e);$("#pairState").textContent=m.includes("expired_code")?"Código expirado. Gere outro no PC.":m.includes("invalid_or_used_code")?"Código inválido ou já utilizado.":m}finally{$("#claimPc").disabled=false}};
+$("#pcCode").oninput=e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"");
+$("#pcCode").onkeydown=e=>{if(e.key==="Enter")$("#claimPc").click()};
+$("[data-pair]").forEach(x=>x.onclick=pair);$("#close").onclick=()=>dlg.close();
 
 function realtime(){if(st.channel)supabase.removeChannel(st.channel);let debounce;const reload=()=>{clearTimeout(debounce);debounce=setTimeout(load,700)};st.channel=supabase.channel("executador-panel").on("postgres_changes",{event:"*",schema:"public",table:"devices"},reload).on("postgres_changes",{event:"*",schema:"public",table:"findings"},reload).on("postgres_changes",{event:"*",schema:"public",table:"scan_runs"},reload).on("postgres_changes",{event:"*",schema:"public",table:"repair_jobs"},reload).subscribe()}
 supabase.auth.onAuthStateChange((event,s)=>{if(event==="PASSWORD_RECOVERY"){$("#auth").classList.remove("hide");$("#app").classList.add("hide");$("#recoveryBox").classList.remove("hide");$("#msg").textContent="Digite sua nova senha abaixo.";return}if(!s){$("#auth").classList.remove("hide");$("#app").classList.add("hide")}});
